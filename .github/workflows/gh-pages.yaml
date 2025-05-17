@@ -14,4 +14,4 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v8
         with:
           baseHref: /mini_game_via_flame/
-          renderer: canvaskit
+          # webRenderer: canvaskit
