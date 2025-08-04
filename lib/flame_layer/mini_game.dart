@@ -1,28 +1,24 @@
+import 'dart:async';
 import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:flame/particles.dart';
 import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/keyboard_key.g.dart';
-import 'package:flutter/src/services/raw_keyboard.dart';
-import 'package:flutter/src/widgets/focus_manager.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
+
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
-import 'package:mini_game_via_flame/pattern%20implementation/enemy.dart';
 import 'package:mini_game_via_flame/pools/arrow_pool.dart';
 import 'package:mini_game_via_flame/pools/enemy_pool.dart';
 import 'package:mini_game_via_flame/sprites/archer.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
-import 'dart:async';
 import 'package:mini_game_via_flame/sprites/goblin.dart';
-import 'package:flame/experimental.dart';
-import 'package:flame/input.dart';
 import 'package:mini_game_via_flame/sprites/heart.dart';
-
-import '../pools/new_enemy_pool.dart';
 
 class MiniGame extends FlameGame with HasKeyboardHandlerComponents, TapCallbacks, DragCallbacks, HasCollisionDetection, HasDecorator{
   final MiniGameBloc miniGameBloc;
@@ -51,10 +47,10 @@ class MiniGame extends FlameGame with HasKeyboardHandlerComponents, TapCallbacks
   final heartScale = 0.05;
   late final ArrowPool arrowPool;
   late final EnemyPool enemyPool;
-  late final NewEnemyPool newEnemyPool;
+  // late final NewEnemyPool newEnemyPool;
   late Arrow arrow;
   int streakKill = 0;
-  late Enemy swordMan;
+  // late Enemy swordMan;
 
 
   @override
@@ -68,7 +64,7 @@ class MiniGame extends FlameGame with HasKeyboardHandlerComponents, TapCallbacks
     enemySpawner2 = _enemySpawner(false, Vector2.all(background.size.y * monstersScale));
     arrowPool = ArrowPool();
     enemyPool = EnemyPool();
-    newEnemyPool = NewEnemyPool();
+    // newEnemyPool = NewEnemyPool();
 
     world = World(children: [background, archerPlayer, heartSpawner, enemySpawner1, enemySpawner2, arrowPool, enemyPool]);
     await add(world); 

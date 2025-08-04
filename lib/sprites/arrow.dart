@@ -6,7 +6,6 @@ import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
-import 'package:mini_game_via_flame/pattern%20implementation/enemy.dart';
 import 'package:mini_game_via_flame/sprites/flyingEye.dart';
 import 'package:mini_game_via_flame/sprites/goblin.dart';
 import 'package:mini_game_via_flame/sprites/mushroom.dart';
@@ -59,7 +58,7 @@ class Arrow extends SpriteAnimationComponent with HasGameRef<MiniGame>, Collisio
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if(other is Goblin || other is Mushroom || other is FlyingEye || other is Enemy) {
+    if(other is Goblin || other is Mushroom || other is FlyingEye) {
       hit();
       gameRef.miniGameBloc.add(KillMonster());
     } else if(other is Skeleton) {
