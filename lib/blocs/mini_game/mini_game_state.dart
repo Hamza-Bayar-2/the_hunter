@@ -21,29 +21,77 @@ class MiniGameState extends Equatable {
   final int gameMode;
   final bool isTheGameReset;
 
-  const MiniGameState({required this.archerHealth, required this.isPlayerFacingRight, required this.isArcherDead, required this.isGameGoingOn, required this.monsterKillNumber, required this.difficultyLevel, required this.enemySpawnPeriod, required this.isSpaceKeyPressing, required this.flutterPage, required this.gameStage, required this.gameMode, required this.isTheGameReset});
-  
-  factory MiniGameState.initial() => const MiniGameState(archerHealth: 100, isPlayerFacingRight: true, isArcherDead: false, isGameGoingOn: true, monsterKillNumber: 0, difficultyLevel: 1, enemySpawnPeriod: 1.6, isSpaceKeyPressing: false, flutterPage: 0, gameStage: 1, gameMode: 0, isTheGameReset: false);
+  const MiniGameState(
+      {required this.archerHealth,
+      required this.isPlayerFacingRight,
+      required this.isArcherDead,
+      required this.isGameGoingOn,
+      required this.monsterKillNumber,
+      required this.difficultyLevel,
+      required this.enemySpawnPeriod,
+      required this.isSpaceKeyPressing,
+      required this.flutterPage,
+      required this.gameStage,
+      required this.gameMode,
+      required this.isTheGameReset});
 
-  MiniGameState copyWith({int? archerHealth, bool? isPlayerFacingRight, bool? isArcherDead, bool? isGameGoingOn, int? monsterKillNumber, int? difficultyLevel, double? enemySpawnPeriod, bool? isSpaceKeyPressing, int? flutterPage, int? gameStage, int? gameMode, bool? isTheGameReset}){
+  factory MiniGameState.initial() => const MiniGameState(
+      archerHealth: 100,
+      isPlayerFacingRight: true,
+      isArcherDead: false,
+      isGameGoingOn: true,
+      monsterKillNumber: 0,
+      difficultyLevel: 1,
+      enemySpawnPeriod: 1.6,
+      isSpaceKeyPressing: false,
+      flutterPage: 0,
+      gameStage: 1,
+      gameMode: 0,
+      isTheGameReset: false);
+
+  MiniGameState copyWith(
+      {int? archerHealth,
+      bool? isPlayerFacingRight,
+      bool? isArcherDead,
+      bool? isGameGoingOn,
+      int? monsterKillNumber,
+      int? difficultyLevel,
+      double? enemySpawnPeriod,
+      bool? isSpaceKeyPressing,
+      int? flutterPage,
+      int? gameStage,
+      int? gameMode,
+      bool? isTheGameReset}) {
     return MiniGameState(
-      archerHealth: archerHealth ?? this.archerHealth,
-      isPlayerFacingRight: isPlayerFacingRight ?? this.isPlayerFacingRight,
-      isArcherDead: isArcherDead ?? this.isArcherDead,
-      isGameGoingOn: isGameGoingOn ?? this.isGameGoingOn,
-      monsterKillNumber: monsterKillNumber ?? this.monsterKillNumber,
-      difficultyLevel: difficultyLevel ?? this.difficultyLevel,
-      enemySpawnPeriod: enemySpawnPeriod ?? this.enemySpawnPeriod,
-      isSpaceKeyPressing: isSpaceKeyPressing ?? this.isSpaceKeyPressing,
-      flutterPage: flutterPage ?? this.flutterPage,
-      gameStage: gameStage ?? this.gameStage,
-      gameMode: gameMode ?? this.gameMode,
-      isTheGameReset: isTheGameReset ?? this.isTheGameReset
-    );
+        archerHealth: archerHealth ?? this.archerHealth,
+        isPlayerFacingRight: isPlayerFacingRight ?? this.isPlayerFacingRight,
+        isArcherDead: isArcherDead ?? this.isArcherDead,
+        isGameGoingOn: isGameGoingOn ?? this.isGameGoingOn,
+        monsterKillNumber: monsterKillNumber ?? this.monsterKillNumber,
+        difficultyLevel: difficultyLevel ?? this.difficultyLevel,
+        enemySpawnPeriod: enemySpawnPeriod ?? this.enemySpawnPeriod,
+        isSpaceKeyPressing: isSpaceKeyPressing ?? this.isSpaceKeyPressing,
+        flutterPage: flutterPage ?? this.flutterPage,
+        gameStage: gameStage ?? this.gameStage,
+        gameMode: gameMode ?? this.gameMode,
+        isTheGameReset: isTheGameReset ?? this.isTheGameReset);
   }
 
   @override
-  List<Object> get props => [archerHealth, isPlayerFacingRight, isArcherDead, isGameGoingOn, monsterKillNumber, difficultyLevel, enemySpawnPeriod, isSpaceKeyPressing, flutterPage, gameStage, gameMode, isTheGameReset];
+  List<Object> get props => [
+        archerHealth,
+        isPlayerFacingRight,
+        isArcherDead,
+        isGameGoingOn,
+        monsterKillNumber,
+        difficultyLevel,
+        enemySpawnPeriod,
+        isSpaceKeyPressing,
+        flutterPage,
+        gameStage,
+        gameMode,
+        isTheGameReset
+      ];
 
   @override
   bool get stringify => true;

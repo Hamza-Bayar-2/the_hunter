@@ -20,15 +20,17 @@ class ArrowPool extends Component with HasGameRef<MiniGame> {
   }
 
   get getArrowPool => _pool;
-  
+
   Arrow _arrowCreater() {
     return Arrow(
-      position: gameRef.archerPlayer.position + Vector2(0, -gameRef.background.size.y * 0.03),
-      // 0.12 and 0.025 are the ratio of the arrow
-      size: Vector2(gameRef.background.size.x * gameRef.arrowScale * 0.12, gameRef.background.size.y * gameRef.arrowScale * 0.025),
-      animation: _arrowAnimation(),
-      anchor: Anchor.center
-    )..debugMode = false;
+        position: gameRef.archerPlayer.position +
+            Vector2(0, -gameRef.background.size.y * 0.03),
+        // 0.12 and 0.025 are the ratio of the arrow
+        size: Vector2(gameRef.background.size.x * gameRef.arrowScale * 0.12,
+            gameRef.background.size.y * gameRef.arrowScale * 0.025),
+        animation: _arrowAnimation(),
+        anchor: Anchor.center)
+      ..debugMode = false;
   }
 
   SpriteAnimation _arrowAnimation() {

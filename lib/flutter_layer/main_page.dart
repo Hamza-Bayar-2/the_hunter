@@ -27,32 +27,25 @@ class MainPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text.rich(
-                      TextSpan(
+                    Text.rich(TextSpan(
                         style: TextStyle(
-                        fontSize: 100,
-                        color: Colors.orange,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(-10.0, 10.0),
-                            blurRadius: 9.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ],
-                      ),
-                        children: <TextSpan> [
+                          fontSize: 100,
+                          color: Colors.orange,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(-10.0, 10.0),
+                              blurRadius: 9.0,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ],
+                        ),
+                        children: <TextSpan>[
                           TextSpan(
-                            text: 'the\n',
-                            style: TextStyle(
-                              fontSize: 72
-                            )
-                          ),
+                              text: 'the\n', style: TextStyle(fontSize: 72)),
                           TextSpan(
                             text: 'hunter',
                           )
-                        ]
-                      )
-                    ),
+                        ])),
                   ],
                 ),
                 Column(
@@ -69,7 +62,7 @@ class MainPage extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Row(  
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
@@ -80,7 +73,9 @@ class MainPage extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  context.read<MiniGameBloc>().add(ChangeDifficultyLevelEvent());
+                                  context
+                                      .read<MiniGameBloc>()
+                                      .add(ChangeDifficultyLevelEvent());
                                 },
                                 child: Text(
                                   _difficultyText(state.difficultyLevel),
@@ -103,7 +98,9 @@ class MainPage extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  context.read<MiniGameBloc>().add(ChangeGameMode());
+                                  context
+                                      .read<MiniGameBloc>()
+                                      .add(ChangeGameMode());
                                 },
                                 child: Text(
                                   state.gameMode == 0 ? "finite" : "kill",
@@ -119,24 +116,16 @@ class MainPage extends StatelessWidget {
                     ),
                     const Text.rich(
                       TextSpan(
-                        style: TextStyle(
-                          fontSize: 42
-                        ),
-                        children: <TextSpan> [
-                          TextSpan(
-                            text: "press"
-                          ),
-                          TextSpan(
-                            text: " space ",
-                            style: TextStyle(
-                              color: Colors.orange,
-                            )
-                          ),
-                          TextSpan(
-                            text: "to start"
-                          ),
-                        ]
-                      ),
+                          style: TextStyle(fontSize: 42),
+                          children: <TextSpan>[
+                            TextSpan(text: "press"),
+                            TextSpan(
+                                text: " space ",
+                                style: TextStyle(
+                                  color: Colors.orange,
+                                )),
+                            TextSpan(text: "to start"),
+                          ]),
                     ),
                   ],
                 ),

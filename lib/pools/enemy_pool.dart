@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/sprites/flyingEye.dart';
@@ -36,12 +35,13 @@ class EnemyPool extends Component with HasGameRef<MiniGame> {
         return enemy;
       }
     }
-    final newMushroom = Mushroom(enemySize: enemySize, isSpawnRight: isSpawnRight);
+    final newMushroom =
+        Mushroom(enemySize: enemySize, isSpawnRight: isSpawnRight);
     _mushroomPool.add(newMushroom);
     return newMushroom;
   }
 
-    FlyingEye flyingEyeAcquire(bool isSpawnRight, Vector2 enemySize) {
+  FlyingEye flyingEyeAcquire(bool isSpawnRight, Vector2 enemySize) {
     for (var enemy in _flyinEyePool) {
       if (!enemy.isVisible && enemy.isSpawnRight == isSpawnRight) {
         return enemy;
@@ -49,7 +49,8 @@ class EnemyPool extends Component with HasGameRef<MiniGame> {
         return enemy;
       }
     }
-    final newFlyingEye = FlyingEye(enemySize: enemySize, isSpawnRight: isSpawnRight);
+    final newFlyingEye =
+        FlyingEye(enemySize: enemySize, isSpawnRight: isSpawnRight);
     _flyinEyePool.add(newFlyingEye);
     return newFlyingEye;
   }
@@ -62,11 +63,12 @@ class EnemyPool extends Component with HasGameRef<MiniGame> {
         return enemy;
       }
     }
-    final newSkeleton = Skeleton(enemySize: enemySize, isSpawnRight: isSpawnRight);
+    final newSkeleton =
+        Skeleton(enemySize: enemySize, isSpawnRight: isSpawnRight);
     _skeletonPool.add(newSkeleton);
     return newSkeleton;
   }
-  
+
   get getGoblinPool => _goblinPool;
   get getMushroomPool => _mushroomPool;
   get getFlyingEyePool => _flyinEyePool;

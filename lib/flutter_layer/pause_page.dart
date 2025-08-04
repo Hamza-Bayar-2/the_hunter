@@ -44,7 +44,9 @@ class PausePage extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.read<MiniGameBloc>().add(ChangeDifficultyLevelEvent());
+                          context
+                              .read<MiniGameBloc>()
+                              .add(ChangeDifficultyLevelEvent());
                         },
                         child: Text(
                           _difficultyText(state.difficultyLevel),
@@ -55,39 +57,34 @@ class PausePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Text.rich(
                     TextSpan(
-                      style: TextStyle(
-                        fontSize: 42
-                      ),
-                      children: <TextSpan> [
-                        TextSpan(
-                          text: "press"
-                        ),
-                        TextSpan(
-                          text: " space ",
-                          style: TextStyle(
-                            color: Colors.orange,
-                          )
-                        ),
-                        TextSpan(
-                          text: "to start"
-                        ),
-                      ]
-                    ),
+                        style: TextStyle(fontSize: 42),
+                        children: <TextSpan>[
+                          TextSpan(text: "press"),
+                          TextSpan(
+                              text: " space ",
+                              style: TextStyle(
+                                color: Colors.orange,
+                              )),
+                          TextSpan(text: "to start"),
+                        ]),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   IconButton(
-                    onPressed: () {
-                      context.read<MiniGameBloc>().add(ResetAllGameEvent());
-                    }, 
-                    icon: const Icon(
-                      Icons.exit_to_app_outlined,
-                      color: Colors.red,
-                      size: 35,
-                    )
-                  ),
+                      onPressed: () {
+                        context.read<MiniGameBloc>().add(ResetAllGameEvent());
+                      },
+                      icon: const Icon(
+                        Icons.exit_to_app_outlined,
+                        color: Colors.red,
+                        size: 35,
+                      )),
                 ],
               ),
             ),
@@ -96,6 +93,7 @@ class PausePage extends StatelessWidget {
       },
     );
   }
+
   String _difficultyText(int difficultyLevel) {
     switch (difficultyLevel) {
       case 1:

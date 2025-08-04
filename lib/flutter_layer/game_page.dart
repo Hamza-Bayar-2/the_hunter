@@ -6,7 +6,7 @@ class GamePage extends StatelessWidget {
   const GamePage({Key? key}) : super(key: key);
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return BlocBuilder<MiniGameBloc, MiniGameState>(
       builder: (context, state) {
         return Container(
@@ -22,50 +22,52 @@ class GamePage extends StatelessWidget {
                     alignment: AlignmentDirectional.topStart,
                     onPressed: () {
                       context.read<MiniGameBloc>().add(GoToPausePage());
-                    }, 
-                    icon: const Icon(
-                      Icons.pause
-                    ),
+                    },
+                    icon: const Icon(Icons.pause),
                     color: Colors.white,
                     iconSize: 30,
                   ),
                 ],
               ),
-              state.gameMode == 0 ? 
-              Container(
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("health: ${state.archerHealth}"),
-                    const SizedBox(height: 20,),
-                    Text("kill: ${state.monsterKillNumber} / 40"),
-                    const SizedBox(height: 20,),
-                    Text("stage: ${state.gameStage} / 4"),
-                  ],
-                ),
-              ) :
-              Container(
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("health: ${state.archerHealth}"),
-                    const SizedBox(height: 20,),
-                    Text("kill: ${state.monsterKillNumber}"),
-                  ],
-                ),
-              )
+              state.gameMode == 0
+                  ? Container(
+                      padding: const EdgeInsets.all(30),
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("health: ${state.archerHealth}"),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text("kill: ${state.monsterKillNumber} / 40"),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text("stage: ${state.gameStage} / 4"),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      padding: const EdgeInsets.all(30),
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("health: ${state.archerHealth}"),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text("kill: ${state.monsterKillNumber}"),
+                        ],
+                      ),
+                    )
             ],
           ),
         );

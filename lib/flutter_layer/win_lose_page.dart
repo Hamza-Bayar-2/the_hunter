@@ -15,77 +15,75 @@ class WinLosePage extends StatelessWidget {
       },
     );
   }
-  
-  Widget _winLose(bool isArcherDead, BuildContext context, MiniGameState state) {
-    return isArcherDead ? Center(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-        child: Container(
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.7),
-            borderRadius: BorderRadius.circular(10)
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Game Over',
-                style: TextStyle(
-                  fontSize: 32.0,
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
+
+  Widget _winLose(
+      bool isArcherDead, BuildContext context, MiniGameState state) {
+    return isArcherDead
+        ? Center(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Container(
+                padding: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Game Over',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                        onPressed: () {
+                          context.read<MiniGameBloc>().add(GoToMainPage());
+                          context.read<MiniGameBloc>().add(ResetHealthEvent());
+                        },
+                        child: const Text(
+                          "Go to menu",
+                        ))
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  context.read<MiniGameBloc>().add(GoToMainPage());
-                  context.read<MiniGameBloc>().add(ResetHealthEvent());
-                }, 
-                child: const Text(
-                  "Go to menu",
-                )
-              )
-            ],
-          ),
-        ),
-      ),
-    ) :
-    Center(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-        child: Container(
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.7), 
-              borderRadius: BorderRadius.circular(10)
             ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'You Win!',
-                style: TextStyle(
-                  fontSize: 32.0,
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
+          )
+        : Center(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Container(
+                padding: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'You Win!',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                        onPressed: () {
+                          context.read<MiniGameBloc>().add(GoToMainPage());
+                          context.read<MiniGameBloc>().add(ResetHealthEvent());
+                        },
+                        child: const Text(
+                          "Go to menu",
+                        )),
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  context.read<MiniGameBloc>().add(GoToMainPage());
-                  context.read<MiniGameBloc>().add(ResetHealthEvent());
-                }, 
-                child: const Text(
-                  "Go to menu",
-                )
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }

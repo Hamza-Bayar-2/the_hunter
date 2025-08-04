@@ -8,7 +8,7 @@ class MiniGameBloc extends Bloc<MiniGameEvent, MiniGameState> {
     on<DecreaseHealthEvent>((event, emit) {
       final newHelth = state.archerHealth - 20;
       emit(state.copyWith(archerHealth: newHelth <= 0 ? 0 : newHelth));
-      emit(state.copyWith(isArcherDead: state.archerHealth <= 0 ));
+      emit(state.copyWith(isArcherDead: state.archerHealth <= 0));
     });
     on<IncreaseHealthEvent>((event, emit) {
       final newHelth = state.archerHealth + 10;
@@ -37,8 +37,12 @@ class MiniGameBloc extends Bloc<MiniGameEvent, MiniGameState> {
     on<ChangeDifficultyLevelEvent>((event, emit) {
       final newDifficulty = state.difficultyLevel + 1;
       final newGoblinSpawnPeriod = state.enemySpawnPeriod - 0.6;
-      emit(state.copyWith(difficultyLevel: newDifficulty > 3 ? 1 : newDifficulty));
-      emit(state.copyWith(enemySpawnPeriod: newDifficulty > 3 ? MiniGameState.initial().enemySpawnPeriod : newGoblinSpawnPeriod));
+      emit(state.copyWith(
+          difficultyLevel: newDifficulty > 3 ? 1 : newDifficulty));
+      emit(state.copyWith(
+          enemySpawnPeriod: newDifficulty > 3
+              ? MiniGameState.initial().enemySpawnPeriod
+              : newGoblinSpawnPeriod));
     });
     on<SpacePressingEvent>((event, emit) {
       emit(state.copyWith(isSpaceKeyPressing: true));
@@ -79,5 +83,5 @@ class MiniGameBloc extends Bloc<MiniGameEvent, MiniGameState> {
     on<NotResetAllGameEvent>((event, emit) {
       emit(state.copyWith(isTheGameReset: false));
     });
-  } 
+  }
 }

@@ -17,15 +17,15 @@ class PageManager extends StatelessWidget {
       },
     );
   }
-  
+
   Widget _pageManager(MiniGameState state) {
-    if(state.flutterPage == 0) {
+    if (state.flutterPage == 0) {
       return const MainPage();
-    } else if(state.flutterPage == 1) {
+    } else if (state.flutterPage == 1) {
       return const GamePage();
-    } else if(state.flutterPage == 2) {
+    } else if (state.flutterPage == 2) {
       return const PausePage();
-    } else if(state.flutterPage == 3) {
+    } else if (state.flutterPage == 3) {
       return const WinLosePage();
     } else {
       return const MainPage();
