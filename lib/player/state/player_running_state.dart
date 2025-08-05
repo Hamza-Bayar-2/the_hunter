@@ -1,0 +1,33 @@
+import 'package:flame/components.dart';
+import 'package:mini_game_via_flame/player/player_component.dart';
+import 'package:mini_game_via_flame/player/state/player_state.dart';
+
+class PlayerRunningState implements PlayerState {
+  @override
+  void handleInput({
+    required Set<PlayerAction> actions,
+    required PlayerComponent player,
+  }) {
+    player.setAttackState();
+    player.setIdleState();
+  }
+
+  @override
+  void update({
+    required double deltaTime,
+    required PlayerComponent player,
+  }) {
+    player.playerFacingDirection();
+    player.playerMovement(deltaTime);
+  }
+
+  @override
+  void onCollision({
+    required Set<Vector2> intersectionPoints,
+    required PositionComponent other,
+    required PlayerComponent player,
+  }) {
+    player.onEnemyCollision(other);
+    player.onHeartCollision(other);
+  }
+}

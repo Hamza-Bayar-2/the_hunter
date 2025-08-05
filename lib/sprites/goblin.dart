@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
+import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/sprites/archer.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
 
@@ -69,7 +70,7 @@ class Goblin extends SpriteAnimationGroupComponent
       print("goblin kill");
       isDying = true;
       FlameAudio.play("monsterDeath.mp3");
-    } else if (other is ArcherPlayer) {
+    } else if (other is ArcherPlayer || other is PlayerComponent) {
       deactivate();
     }
     super.onCollision(intersectionPoints, other);

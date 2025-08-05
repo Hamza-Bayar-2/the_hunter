@@ -13,6 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
+import 'package:mini_game_via_flame/device_detector.dart';
+import 'package:mini_game_via_flame/player/player_component.dart';
+import 'package:mini_game_via_flame/player/state/player_state.dart';
 import 'package:mini_game_via_flame/pools/arrow_pool.dart';
 import 'package:mini_game_via_flame/pools/enemy_pool.dart';
 import 'package:mini_game_via_flame/sprites/archer.dart';
@@ -32,10 +35,12 @@ class MiniGame extends FlameGame
 
   late final SpriteComponent background;
   late final ArcherPlayer archerPlayer;
+  late final PlayerComponent _playerComponent;
   // 0.72 seconds is the frame amount of the attack animation multiplies by step time (6 * 0.12)
   // The purpose of this timer is to ensure that arrows are released at the right time
   // in the archer's attack animation.
   final Timer arrowTimer = Timer(0.51);
+  final DeviceDetector deviceDetector = DeviceDetector();
   late Bgm backgroundMusic =
       FlameAudio.bgmFactory(audioCache: FlameAudio.audioCache);
   final double heartSpawnPeriod = 7.5;
@@ -81,8 +86,14 @@ class MiniGame extends FlameGame
     background = SpriteComponent(
         sprite: Sprite(images.fromCache("gameBackground.png")), size: size);
     archerPlayer = ArcherPlayer(
-        size: Vector2.all(background.size.y * archerScale),
-        position: Vector2(background.size.x / 2, background.size.y / 2));
+      size: Vector2.all(background.size.y * archerScale),
+      position: Vector2(background.size.x / 2, background.size.y / 2),
+    );
+    _playerComponent = PlayerComponent(
+      playerSpeed: 250,
+      size: Vector2.all(background.size.y * archerScale),
+      position: Vector2(background.size.x / 8, background.size.y / 2),
+    );
     heartSpawner = _heartSpawner();
     enemySpawner1 =
         _enemySpawner(true, Vector2.all(background.size.y * monstersScale));
@@ -95,17 +106,21 @@ class MiniGame extends FlameGame
     world = World(children: [
       background,
       archerPlayer,
+      _playerComponent,
       heartSpawner,
       enemySpawner1,
       enemySpawner2,
       arrowPool,
       enemyPool
     ]);
-    await add(world);
-    cameraComponent = CameraComponent.withFixedResolution(
-        width: size.x, height: size.y, world: world);
-    await add(cameraComponent);
-    // cameraComponent.follow(archerPlayer);
+    await addAll([
+      world,
+      cameraComponent = CameraComponent.withFixedResolution(
+        width: size.x,
+        height: size.y,
+        world: world,
+      ),
+    ]);
     cameraComponent.moveTo(size / 2);
 
     return super.onLoad();
@@ -133,6 +148,23 @@ class MiniGame extends FlameGame
   @override
   KeyEventResult onKeyEvent(
       KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    _playerComponent.onInput(<PlayerAction>{
+      for (final LogicalKeyboardKey key in keysPressed)
+        if (key == LogicalKeyboardKey.arrowLeft ||
+            key == LogicalKeyboardKey.keyA)
+          PlayerAction.moveLeft
+        else if (key == LogicalKeyboardKey.arrowRight ||
+            key == LogicalKeyboardKey.keyD)
+          PlayerAction.moveRight
+        else if (key == LogicalKeyboardKey.arrowUp ||
+            key == LogicalKeyboardKey.keyW)
+          PlayerAction.moveUp
+        else if (key == LogicalKeyboardKey.arrowDown ||
+            key == LogicalKeyboardKey.keyS)
+          PlayerAction.moveDown
+        else if (key == LogicalKeyboardKey.space)
+          PlayerAction.attack
+    });
     // this is used to throw arrows
     // also space key is used to continuo the game if it was paused
     if (keysPressed.contains(LogicalKeyboardKey.space)) {

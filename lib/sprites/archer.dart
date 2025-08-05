@@ -38,8 +38,10 @@ class ArcherPlayer extends SpriteAnimationGroupComponent
         TapCallbacks,
         DragCallbacks,
         CollisionCallbacks {
-  ArcherPlayer({required Vector2 size, required Vector2 position})
-      : super(position: position, size: size, anchor: Anchor.center);
+  ArcherPlayer({
+    required Vector2 size,
+    required Vector2 position,
+  }) : super(position: position, size: size, anchor: Anchor.center);
   PressedKey pressedKey = PressedKey.none;
   double speed = 250;
   // When the player runs diagonally, this value will be used

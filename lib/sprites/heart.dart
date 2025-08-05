@@ -4,8 +4,8 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
+import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/sprites/archer.dart';
 
 class Heart extends SpriteAnimationComponent
@@ -50,8 +50,7 @@ class Heart extends SpriteAnimationComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is ArcherPlayer) {
-      gameRef.miniGameBloc.add(IncreaseHealthEvent());
+    if (other is ArcherPlayer || other is PlayerComponent) {
       FlameAudio.play("powerUp.mp3");
       removeFromParent();
     }
