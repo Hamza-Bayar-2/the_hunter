@@ -105,7 +105,7 @@ class MiniGame extends FlameGame
 
     world = World(children: [
       background,
-      archerPlayer,
+      // archerPlayer,
       _playerComponent,
       heartSpawner,
       enemySpawner1,

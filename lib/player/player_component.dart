@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/state/player_attack_state.dart';
+import 'package:mini_game_via_flame/player/state/player_death_state.dart';
 import 'package:mini_game_via_flame/player/state/player_get_hit_state.dart';
 import 'package:mini_game_via_flame/player/state/player_get_life_state.dart';
 import 'package:mini_game_via_flame/player/state/player_idle_state.dart';
@@ -85,6 +86,8 @@ class PlayerComponent extends SpriteAnimationGroupComponent
   bool get _isRunningDiagonally =>
       (_shouldMoveLeft || _shouldMoveRight) &&
       (_shouldMoveUp || _shouldMoveDown);
+  bool get shouldPlayerDie => gameRef.miniGameBloc.state.isArcherDead;
+  bool get _isPlayerLowHealth => gameRef.miniGameBloc.state.archerHealth <= 20;
 
   @override
   Future<void> onLoad() async {
@@ -239,7 +242,11 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     debugPrint("state: ${_state.runtimeType}");
     animationTicker?.onComplete = () {
       forceIdleState();
-      decorator.replaceLast(null);
+      // if the player in low health do not remove the red color effect
+      if (!_isPlayerLowHealth) {
+        decorator.replaceLast(null);
+      }
+      setDeathState();
     };
   }
 
@@ -258,6 +265,24 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       forceIdleState();
       decorator.replaceLast(null);
     };
+  }
+
+  void setDeathState() {
+    if (!shouldPlayerDie) {
+      return;
+    }
+
+    decorator.replaceLast(
+      PaintDecorator.tint(
+        const Color.fromARGB(93, 255, 0, 0),
+      ),
+    );
+    current = PlayerAnimation.death;
+    _state = PlayerDeathState();
+    animationTicker?.onComplete = () {
+      gameRef.miniGameBloc.add(GoToWinOrLosePage());
+    };
+    debugPrint("state: ${_state.runtimeType}");
   }
 
   void playerMovement(double dt) {
@@ -298,12 +323,12 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     if (_shouldMoveLeft) {
       if (gameRef.miniGameBloc.state.isPlayerFacingRight) {
         flipHorizontallyAroundCenter();
-        // gameRef.miniGameBloc.add(FaceLeftEvent());
+        gameRef.miniGameBloc.add(FaceLeftEvent());
       }
     } else {
       if (!gameRef.miniGameBloc.state.isPlayerFacingRight) {
         flipHorizontallyAroundCenter();
-        // gameRef.miniGameBloc.add(FaceRightEvent());
+        gameRef.miniGameBloc.add(FaceRightEvent());
       }
     }
   }

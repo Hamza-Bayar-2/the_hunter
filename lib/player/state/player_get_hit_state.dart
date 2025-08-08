@@ -24,5 +24,8 @@ class PlayerGetHitState implements PlayerState {
     required Set<Vector2> intersectionPoints,
     required PositionComponent other,
     required PlayerComponent player,
-  }) {}
+  }) {
+    player.onEnemyCollision(other);
+    player.onHeartCollision(other);
+  }
 }

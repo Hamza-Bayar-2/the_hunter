@@ -24,5 +24,7 @@ class PlayerGetLifeState implements PlayerState {
     required Set<Vector2> intersectionPoints,
     required PositionComponent other,
     required PlayerComponent player,
-  }) {}
+  }) {
+    player.onEnemyCollision(other);
+  }
 }

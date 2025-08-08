@@ -16,7 +16,10 @@ class PlayerDeathState implements PlayerState {
     required double deltaTime,
     required PlayerComponent player,
   }) {
-    // TODO: implement update
+    if (!player.shouldPlayerDie) {
+      player.decorator.replaceLast(null);
+      player.forceIdleState();
+    }
   }
 
   @override
