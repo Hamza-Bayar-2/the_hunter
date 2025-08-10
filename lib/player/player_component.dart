@@ -235,6 +235,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       const Color.fromARGB(93, 255, 0, 0),
     );
 
+    fa.FlameAudio.play("hurt.mp3");
     _cameraShake.resume();
     gameRef.miniGameBloc.add(DecreaseHealthEvent());
     current = PlayerAnimation.getHit;
@@ -280,6 +281,8 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       const Color.fromARGB(93, 255, 0, 0),
     );
 
+    fa.FlameAudio.play("death.mp3");
+    fa.FlameAudio.play("lose.mp3", volume: 0.5);
     current = PlayerAnimation.death;
     _state = PlayerDeathState();
     animationTicker?.onComplete = () {
