@@ -6,7 +6,6 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
-import 'package:mini_game_via_flame/sprites/archer.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
 
 enum MushroomState { run, death, attack }
@@ -67,7 +66,7 @@ class Mushroom extends SpriteAnimationGroupComponent
     if (other is Arrow && !isDying) {
       isDying = true;
       FlameAudio.play(AudioConstants.mushroomDeath);
-    } else if (other is ArcherPlayer || other is PlayerComponent) {
+    } else if (other is PlayerComponent) {
       deactivate();
     }
     super.onCollision(intersectionPoints, other);
@@ -116,9 +115,9 @@ class Mushroom extends SpriteAnimationGroupComponent
       current = MushroomState.run;
 
       if (isMushroomFollowsTheArhcer &&
-          gameRef.archerPlayer.position.x < position.x) {
+          gameRef.playerComponent.position.x < position.x) {
         directionX -= mushroomHypotenuseSpeed;
-        if (gameRef.archerPlayer.position.y < position.y) {
+        if (gameRef.playerComponent.position.y < position.y) {
           directionY -= mushroomHypotenuseSpeed;
         } else {
           directionY += mushroomHypotenuseSpeed;
@@ -139,9 +138,9 @@ class Mushroom extends SpriteAnimationGroupComponent
       current = MushroomState.run;
 
       if (isMushroomFollowsTheArhcer &&
-          gameRef.archerPlayer.position.x > position.x) {
+          gameRef.playerComponent.position.x > position.x) {
         directionX += mushroomHypotenuseSpeed;
-        if (gameRef.archerPlayer.position.y < position.y) {
+        if (gameRef.playerComponent.position.y < position.y) {
           directionY -= mushroomHypotenuseSpeed;
         } else {
           directionY += mushroomHypotenuseSpeed;

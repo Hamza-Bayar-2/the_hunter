@@ -7,7 +7,6 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
-import 'package:mini_game_via_flame/sprites/archer.dart';
 
 class Heart extends SpriteAnimationComponent
     with HasGameRef<MiniGame>, CollisionCallbacks {
@@ -51,7 +50,7 @@ class Heart extends SpriteAnimationComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is ArcherPlayer || other is PlayerComponent) {
+    if (other is PlayerComponent) {
       FlameAudio.play(AudioConstants.powerUp);
       removeFromParent();
     }

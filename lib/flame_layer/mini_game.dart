@@ -19,7 +19,6 @@ import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/player/state/player_state.dart';
 import 'package:mini_game_via_flame/pools/arrow_pool.dart';
 import 'package:mini_game_via_flame/pools/enemy_pool.dart';
-import 'package:mini_game_via_flame/sprites/archer.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
 import 'package:mini_game_via_flame/sprites/goblin.dart';
 import 'package:mini_game_via_flame/sprites/heart.dart';
@@ -35,7 +34,6 @@ class MiniGame extends FlameGame
   MiniGame({required this.miniGameBloc});
 
   late final SpriteComponent background;
-  late final ArcherPlayer archerPlayer;
   late final PlayerComponent _playerComponent;
   // 0.72 seconds is the frame amount of the attack animation multiplies by step time (6 * 0.12)
   // The purpose of this timer is to ensure that arrows are released at the right time
@@ -49,8 +47,6 @@ class MiniGame extends FlameGame
   late SpawnComponent enemySpawner1;
   late SpawnComponent enemySpawner2;
   late int previousDifficultyLevel = miniGameBloc.state.difficultyLevel;
-  late int previousMonsterKillNumber = miniGameBloc.state.monsterKillNumber;
-  late int previousArcherHealth = miniGameBloc.state.archerHealth;
   late final CameraComponent cameraComponent;
   @override
   late final World world;
@@ -72,10 +68,8 @@ class MiniGame extends FlameGame
     await FlameAudio.audioCache.loadAll(AudioConstants.allAudioFiles);
     await images.loadAllImages();
     background = SpriteComponent(
-        sprite: Sprite(images.fromCache("gameBackground.png")), size: size);
-    archerPlayer = ArcherPlayer(
-      size: Vector2.all(background.size.y * archerScale),
-      position: Vector2(background.size.x / 2, background.size.y / 2),
+      sprite: Sprite(images.fromCache("gameBackground.png")),
+      size: size,
     );
     _playerComponent = PlayerComponent(
       playerSpeed: 250,
@@ -85,15 +79,18 @@ class MiniGame extends FlameGame
     heartSpawner = _heartSpawner();
     enemySpawner1 =
         _enemySpawner(true, Vector2.all(background.size.y * monstersScale));
-    enemySpawner2 =
-        _enemySpawner(false, Vector2.all(background.size.y * monstersScale));
+    enemySpawner2 = _enemySpawner(
+      false,
+      Vector2.all(
+        background.size.y * monstersScale,
+      ),
+    );
     arrowPool = ArrowPool();
     enemyPool = EnemyPool();
     // newEnemyPool = NewEnemyPool();
 
     world = World(children: [
       background,
-      // archerPlayer,
       _playerComponent,
       heartSpawner,
       enemySpawner1,

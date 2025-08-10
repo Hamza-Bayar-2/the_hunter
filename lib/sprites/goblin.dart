@@ -6,7 +6,6 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
-import 'package:mini_game_via_flame/sprites/archer.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
 
 enum GoblinState { run, death, attack }
@@ -71,7 +70,7 @@ class Goblin extends SpriteAnimationGroupComponent
       print("goblin kill");
       isDying = true;
       FlameAudio.play(AudioConstants.monsterDeath);
-    } else if (other is ArcherPlayer || other is PlayerComponent) {
+    } else if (other is PlayerComponent) {
       deactivate();
     }
     super.onCollision(intersectionPoints, other);
@@ -120,9 +119,9 @@ class Goblin extends SpriteAnimationGroupComponent
       current = GoblinState.run;
 
       if (isGoblinFollowsTheArhcer &&
-          gameRef.archerPlayer.position.x < position.x) {
+          gameRef.playerComponent.position.x < position.x) {
         directionX -= goblinHypotenuseSpeed;
-        if (gameRef.archerPlayer.position.y - 20 < position.y) {
+        if (gameRef.playerComponent.position.y - 20 < position.y) {
           directionY -= goblinHypotenuseSpeed;
         } else {
           directionY += goblinHypotenuseSpeed;
@@ -148,9 +147,9 @@ class Goblin extends SpriteAnimationGroupComponent
       current = GoblinState.run;
 
       if (isGoblinFollowsTheArhcer &&
-          gameRef.archerPlayer.position.x > position.x) {
+          gameRef.playerComponent.position.x > position.x) {
         directionX += goblinHypotenuseSpeed;
-        if (gameRef.archerPlayer.position.y - 20 < position.y) {
+        if (gameRef.playerComponent.position.y - 20 < position.y) {
           directionY -= goblinHypotenuseSpeed;
         } else {
           directionY += goblinHypotenuseSpeed;

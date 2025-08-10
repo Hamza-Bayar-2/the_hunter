@@ -5,7 +5,6 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
-import 'package:mini_game_via_flame/sprites/archer.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
 
 enum FlyingEyeState { run, death, attack }
@@ -69,7 +68,7 @@ class FlyingEye extends SpriteAnimationGroupComponent
     if (other is Arrow && !isDying) {
       isDying = true;
       FlameAudio.play(AudioConstants.flyingEyeDeath, volume: 0.7);
-    } else if (other is ArcherPlayer || other is PlayerComponent) {
+    } else if (other is PlayerComponent) {
       // removeFromParent();
       deactivate();
     }
@@ -121,7 +120,6 @@ class FlyingEye extends SpriteAnimationGroupComponent
           : flyingEyeSpeed;
 
       if (position.x < 0) {
-        // removeFromParent();
         deactivate();
         position = Vector2(gameRef.background.size.x, 0);
       }

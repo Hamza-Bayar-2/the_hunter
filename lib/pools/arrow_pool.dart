@@ -24,7 +24,7 @@ class ArrowPool extends Component with HasGameRef<MiniGame> {
   Arrow _arrowCreater() {
     return Arrow(
       playerComponent: gameRef.playerComponent,
-      position: gameRef.archerPlayer.position +
+      position: gameRef.playerComponent.position +
           Vector2(0, -gameRef.background.size.y * 0.03),
       // 0.12 and 0.025 are the ratio of the arrow
       size: Vector2(gameRef.background.size.x * gameRef.arrowScale * 0.12,
