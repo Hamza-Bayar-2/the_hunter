@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
+import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/device_detector.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/player/state/player_state.dart';
@@ -68,22 +69,7 @@ class MiniGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    await FlameAudio.audioCache.loadAll([
-      'running.mp3',
-      'arrow.mp3',
-      'death.mp3',
-      'hurt.mp3',
-      'monsterDeath.mp3',
-      'bgm.mp3',
-      'powerUp.mp3',
-      'win.mp3',
-      'lose.mp3',
-      'skeletonDeath.mp3',
-      'skeletonDeath2.mp3',
-      'mushroomDeath.mp3',
-      'flyingEyeDeath.mp3',
-      'shield.mp3'
-    ]);
+    await FlameAudio.audioCache.loadAll(AudioConstants.allAudioFiles);
     await images.loadAllImages();
     background = SpriteComponent(
         sprite: Sprite(images.fromCache("gameBackground.png")), size: size);
@@ -202,7 +188,7 @@ class MiniGame extends FlameGame
         }
         // after the arrow is ready it will be fired
         arrow.fire();
-        FlameAudio.play("arrow.mp3");
+        FlameAudio.play(AudioConstants.arrow);
         arrowTimer.start();
         // from here we can check how many arrow dose the pool has
       }
@@ -278,7 +264,7 @@ class MiniGame extends FlameGame
         miniGameBloc.state.isArcherDead) {
       backgroundMusic.pause();
     } else if (!backgroundMusic.isPlaying) {
-      backgroundMusic.play("bgm.mp3", volume: 0.2);
+      backgroundMusic.play(AudioConstants.bgm, volume: 0.2);
       backgroundMusic.resume();
     }
   }
@@ -305,7 +291,7 @@ class MiniGame extends FlameGame
       // otherwise the player will continuo playing.
       if (miniGameBloc.state.gameMode == 0) {
         // The player completed all 4 stages and won the game flutterPage => 3
-        FlameAudio.play("win.mp3", volume: 0.5);
+        FlameAudio.play(AudioConstants.win, volume: 0.5);
         miniGameBloc.add(GoToWinOrLosePage());
       }
     }

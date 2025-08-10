@@ -10,6 +10,7 @@ import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart' as fa;
 import 'package:flutter/foundation.dart';
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
+import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/state/player_attack_state.dart';
 import 'package:mini_game_via_flame/player/state/player_death_state.dart';
@@ -18,7 +19,7 @@ import 'package:mini_game_via_flame/player/state/player_get_life_state.dart';
 import 'package:mini_game_via_flame/player/state/player_idle_state.dart';
 import 'package:mini_game_via_flame/player/state/player_running_state.dart';
 import 'package:mini_game_via_flame/player/state/player_state.dart';
-import 'package:mini_game_via_flame/sprites/flyingEye.dart';
+import 'package:mini_game_via_flame/sprites/flying_eye.dart';
 import 'package:mini_game_via_flame/sprites/goblin.dart';
 import 'package:mini_game_via_flame/sprites/heart.dart';
 import 'package:mini_game_via_flame/sprites/mushroom.dart';
@@ -216,7 +217,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     }
     current = PlayerAnimation.run;
     _state = PlayerRunningState();
-    _runSoundEffect.play("running.mp3");
+    _runSoundEffect.play(AudioConstants.running);
     debugPrint("state: ${_state.runtimeType}");
   }
 
@@ -235,7 +236,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       const Color.fromARGB(93, 255, 0, 0),
     );
 
-    fa.FlameAudio.play("hurt.mp3");
+    fa.FlameAudio.play(AudioConstants.hurt);
     _cameraShake.resume();
     gameRef.miniGameBloc.add(DecreaseHealthEvent());
     current = PlayerAnimation.getHit;
@@ -281,8 +282,8 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       const Color.fromARGB(93, 255, 0, 0),
     );
 
-    fa.FlameAudio.play("death.mp3");
-    fa.FlameAudio.play("lose.mp3", volume: 0.5);
+    fa.FlameAudio.play(AudioConstants.death);
+    fa.FlameAudio.play(AudioConstants.lose, volume: 0.5);
     current = PlayerAnimation.death;
     _state = PlayerDeathState();
     animationTicker?.onComplete = () {

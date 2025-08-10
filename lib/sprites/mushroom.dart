@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/sprites/archer.dart';
@@ -65,7 +66,7 @@ class Mushroom extends SpriteAnimationGroupComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Arrow && !isDying) {
       isDying = true;
-      FlameAudio.play("mushroomDeath.mp3");
+      FlameAudio.play(AudioConstants.mushroomDeath);
     } else if (other is ArcherPlayer || other is PlayerComponent) {
       deactivate();
     }

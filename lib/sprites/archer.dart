@@ -9,8 +9,9 @@ import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/services.dart';
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
+import 'package:mini_game_via_flame/constants/audio_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
-import 'package:mini_game_via_flame/sprites/flyingEye.dart';
+import 'package:mini_game_via_flame/sprites/flying_eye.dart';
 import 'package:mini_game_via_flame/sprites/goblin.dart';
 import 'package:mini_game_via_flame/sprites/heart.dart';
 import 'package:mini_game_via_flame/sprites/mushroom.dart';
@@ -294,7 +295,7 @@ class ArcherPlayer extends SpriteAnimationGroupComponent
     // untel the time is up the current state will be the death state
     // when the time is up the current state will be the deathStatic state
     if (archerDeathCountdown.finished) {
-      FlameAudio.play("lose.mp3", volume: 0.5);
+      FlameAudio.play(AudioConstants.lose, volume: 0.5);
       current = ArcherState.deathStatic;
       isDeathAudioPlayed = false;
       gameRef.miniGameBloc.add(GoToWinOrLosePage());
@@ -302,7 +303,7 @@ class ArcherPlayer extends SpriteAnimationGroupComponent
       // archerDeathCountdown.stop();
     } else {
       if (!isDeathAudioPlayed) {
-        FlameAudio.play("death.mp3");
+        FlameAudio.play(AudioConstants.death);
         isDeathAudioPlayed = true;
       }
       current = ArcherState.death;
@@ -313,7 +314,7 @@ class ArcherPlayer extends SpriteAnimationGroupComponent
     if (current != ArcherState.idle &&
         current != ArcherState.attack &&
         !isArcherRunning) {
-      runSoundBmg.play("running.mp3");
+      runSoundBmg.play(AudioConstants.running);
       isArcherRunning = true;
     } else if (current == ArcherState.idle ||
         current == ArcherState.attack ||
@@ -328,7 +329,7 @@ class ArcherPlayer extends SpriteAnimationGroupComponent
     current = ArcherState.getHit;
     if (animationTicker!.isLastFrame) {
       cameraShake.pause();
-      FlameAudio.play("hurt.mp3");
+      FlameAudio.play(AudioConstants.hurt);
       isArcherGetHit = false;
     }
   }

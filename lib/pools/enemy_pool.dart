@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
-import 'package:mini_game_via_flame/sprites/flyingEye.dart';
+import 'package:mini_game_via_flame/sprites/flying_eye.dart';
 import 'package:mini_game_via_flame/sprites/goblin.dart';
 import 'package:mini_game_via_flame/sprites/mushroom.dart';
 import 'package:mini_game_via_flame/sprites/skeleton.dart';
