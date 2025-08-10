@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
+import 'package:mini_game_via_flame/constants/image_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
@@ -93,13 +94,26 @@ class Mushroom extends SpriteAnimationGroupComponent
       required int frameAmount,
       required double stepTime}) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache("Enemies/Mushroom/$mushroomState.png"),
+      gameRef.images.fromCache(_getMushroomImagePath(mushroomState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
         textureSize: Vector2.all(150),
       ),
     );
+  }
+
+  String _getMushroomImagePath(String mushroomState) {
+    switch (mushroomState) {
+      case "Run":
+        return ImageConstants.mushroomRun;
+      case "Death":
+        return ImageConstants.mushroomDeath;
+      case "Attack":
+        return ImageConstants.mushroomAttack;
+      default:
+        return ImageConstants.mushroomRun;
+    }
   }
 
   void _mushroomMovement(double dt) {

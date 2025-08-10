@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
+import 'package:mini_game_via_flame/constants/image_constants.dart';
 import 'package:mini_game_via_flame/device_detector.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/player/state/player_state.dart';
@@ -68,7 +69,7 @@ class MiniGame extends FlameGame
     await FlameAudio.audioCache.loadAll(AudioConstants.allAudioFiles);
     await images.loadAllImages();
     background = SpriteComponent(
-      sprite: Sprite(images.fromCache("gameBackground.png")),
+      sprite: Sprite(images.fromCache(ImageConstants.gameBackground)),
       size: size,
     );
     _playerComponent = PlayerComponent(
@@ -247,7 +248,7 @@ class MiniGame extends FlameGame
 
   SpriteAnimation _heartAnimation() {
     return SpriteAnimation.fromFrameData(
-      images.fromCache("heart.png"),
+      images.fromCache(ImageConstants.heart),
       SpriteAnimationData.sequenced(
         amount: 5,
         stepTime: 0.1,

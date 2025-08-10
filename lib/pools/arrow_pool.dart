@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:mini_game_via_flame/constants/image_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
 
@@ -36,7 +37,7 @@ class ArrowPool extends Component with HasGameRef<MiniGame> {
 
   SpriteAnimation _arrowAnimation() {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache("Archer/Arrow/Move.png"),
+      gameRef.images.fromCache(ImageConstants.archerArrowMove),
       SpriteAnimationData.sequenced(
         amount: 2,
         stepTime: 0.07,

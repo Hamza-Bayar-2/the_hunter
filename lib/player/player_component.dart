@@ -11,6 +11,7 @@ import 'package:flame_audio/flame_audio.dart' as fa;
 import 'package:flutter/foundation.dart';
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
+import 'package:mini_game_via_flame/constants/image_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/state/player_attack_state.dart';
 import 'package:mini_game_via_flame/player/state/player_death_state.dart';
@@ -184,7 +185,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     required bool loop,
   }) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache("Archer/Character/$archerState.png"),
+      gameRef.images.fromCache(_getArcherImagePath(archerState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
@@ -192,6 +193,23 @@ class PlayerComponent extends SpriteAnimationGroupComponent
         loop: loop,
       ),
     );
+  }
+
+  String _getArcherImagePath(String archerState) {
+    switch (archerState) {
+      case "Idle":
+        return ImageConstants.archerCharacterIdle;
+      case "Run":
+        return ImageConstants.archerCharacterRun;
+      case "Attack":
+        return ImageConstants.archerCharacterAttack;
+      case "Death":
+        return ImageConstants.archerCharacterDeath;
+      case "Get Hit":
+        return ImageConstants.archerCharacterGetHit;
+      default:
+        return ImageConstants.archerCharacterIdle;
+    }
   }
 
   void setIdleState() {

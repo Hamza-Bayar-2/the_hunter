@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:mini_game_via_flame/constants/audio_constants.dart';
+import 'package:mini_game_via_flame/constants/image_constants.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
 import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/sprites/arrow.dart';
@@ -67,7 +68,6 @@ class Goblin extends SpriteAnimationGroupComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Arrow && !isDying) {
-      print("goblin kill");
       isDying = true;
       FlameAudio.play(AudioConstants.monsterDeath);
     } else if (other is PlayerComponent) {
@@ -97,13 +97,26 @@ class Goblin extends SpriteAnimationGroupComponent
       required int frameAmount,
       required double stepTime}) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache("Enemies/Goblin/$goblinState.png"),
+      gameRef.images.fromCache(_getGoblinImagePath(goblinState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
         textureSize: Vector2.all(150),
       ),
     );
+  }
+
+  String _getGoblinImagePath(String goblinState) {
+    switch (goblinState) {
+      case "Run":
+        return ImageConstants.goblinRun;
+      case "Death":
+        return ImageConstants.goblinDeath;
+      case "Attack":
+        return ImageConstants.goblinAttack;
+      default:
+        return ImageConstants.goblinRun;
+    }
   }
 
   void _goblinMovement(double dt) {
