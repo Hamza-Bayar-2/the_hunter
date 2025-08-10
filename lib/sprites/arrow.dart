@@ -6,6 +6,7 @@ import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
 import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
+import 'package:mini_game_via_flame/player/player_component.dart';
 import 'package:mini_game_via_flame/sprites/flyingEye.dart';
 import 'package:mini_game_via_flame/sprites/goblin.dart';
 import 'package:mini_game_via_flame/sprites/mushroom.dart';
@@ -14,34 +15,34 @@ import 'package:mini_game_via_flame/sprites/skeleton.dart';
 class Arrow extends SpriteAnimationComponent
     with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {
   Arrow({
+    required PlayerComponent playerComponent,
     SpriteAnimation? animation,
     Vector2? position,
     Vector2? size,
     Anchor? anchor,
-  }) : super(
-            animation: animation,
-            position: position,
-            size: size,
-            anchor: anchor);
+  })  : _playerComponent = playerComponent,
+        super(
+          animation: animation,
+          position: position,
+          size: size,
+          anchor: anchor,
+        );
 
+  final PlayerComponent _playerComponent;
   final double _arrowSpeed = 600;
+  final Random _random = Random();
+  late final RectangleHitbox hitbox;
+  late bool _isArcherFacingRight;
   Vector2 velocity = Vector2.zero();
   bool isArrowFacingRight = true;
-  final Random _random = Random();
-  Vector2 randomVector2ForArrow() =>
-      (-Vector2.random(_random) - Vector2(1, -0.5)) * 300;
-  // the reason why I used variable instead of using it directly inside the "if"
-  // because when I do it like that the arrow will change direction
-  // according to the archer even after leaving the bow
-  late bool isArcherFacingRight =
-      gameRef.miniGameBloc.state.isPlayerFacingRight;
-  late final RectangleHitbox hitbox;
 
   @override
   FutureOr<void> onLoad() {
-    hitbox = RectangleHitbox.relative(
-        parentSize: size, Vector2(1, 1), anchor: Anchor.center)
-      ..debugMode = false;
+    // the reason why I used variable instead of using it directly inside the "if"
+    // because when I do it like that the arrow will change direction
+    // according to the archer even after leaving the bow
+    _isArcherFacingRight = gameRef.miniGameBloc.state.isPlayerFacingRight;
+    hitbox = RectangleHitbox();
     add(hitbox);
     isVisible = false;
     return super.onLoad();
@@ -52,14 +53,11 @@ class Arrow extends SpriteAnimationComponent
     if (isVisible) {
       _arrowMovement(dt);
       _arrowParticle();
+      _onArrowOutOfBoundaries();
     } else {
       // this will change the direction of the arrow after the creation
       // without this line the created arrow will not change its direction even if the archer changes her direction
-      isArcherFacingRight = gameRef.miniGameBloc.state.isPlayerFacingRight;
-      // this will keep the hiden arrows nexto the archer
-      // and they will be ready to be throwen
-      position = gameRef.archerPlayer.position +
-          Vector2(0, -gameRef.background.size.y * 0.03);
+      _isArcherFacingRight = gameRef.miniGameBloc.state.isPlayerFacingRight;
     }
 
     super.update(dt);
@@ -82,7 +80,7 @@ class Arrow extends SpriteAnimationComponent
   void _arrowMovement(double dt) {
     double directionX = 0.0;
     // this for set the arrow direction (right or left)
-    if (isArcherFacingRight) {
+    if (_isArcherFacingRight) {
       directionX += _arrowSpeed;
       if (!isArrowFacingRight) {
         flipHorizontallyAroundCenter();
@@ -98,7 +96,9 @@ class Arrow extends SpriteAnimationComponent
 
     velocity = Vector2(directionX, 0);
     position.add(velocity * dt);
+  }
 
+  void _onArrowOutOfBoundaries() {
     if (position.x < 0 || position.x > gameRef.background.size.x) {
       hit();
     }
@@ -112,8 +112,8 @@ class Arrow extends SpriteAnimationComponent
           count: 2,
           generator: (i) => AcceleratedParticle(
             position: Vector2(0, position.y * 0.01),
-            acceleration: randomVector2ForArrow(),
-            speed: randomVector2ForArrow(),
+            acceleration: _randomVector2ForArrow(),
+            speed: _randomVector2ForArrow(),
             child: CircleParticle(
               radius: 1,
               paint: Paint()..color = Colors.white,
@@ -124,17 +124,20 @@ class Arrow extends SpriteAnimationComponent
     );
   }
 
+  Vector2 _randomVector2ForArrow() =>
+      (-Vector2.random(_random) - Vector2(1, -0.5)) * 300;
+
   void fire() {
     isVisible = true;
     hitbox.collisionType = CollisionType.active;
-    // print('Arrow fired!');
+    position = Vector2(
+      _playerComponent.position.x,
+      _playerComponent.position.y - (size.y * 3),
+    );
   }
 
   void hit() {
     isVisible = false;
     hitbox.collisionType = CollisionType.inactive;
-    position = gameRef.archerPlayer.position +
-        Vector2(0, -gameRef.background.size.y * 0.03);
-    // print('Arrow hit the target!');
   }
 }

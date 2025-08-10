@@ -64,6 +64,8 @@ class MiniGame extends FlameGame
   int streakKill = 0;
   // late Enemy swordMan;
 
+  PlayerComponent get playerComponent => _playerComponent;
+
   @override
   Future<void> onLoad() async {
     await FlameAudio.audioCache.loadAll([

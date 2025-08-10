@@ -63,8 +63,6 @@ class PlayerComponent extends SpriteAnimationGroupComponent
   final Bgm _runSoundEffect;
   final MoveEffect _cameraShake;
   final Set<PlayerAction> _actions;
-  late final RectangleHitbox _hitbox;
-  late int _previousArcherHealth;
   PlayerState _state;
   Vector2 _velocity;
 
@@ -91,9 +89,8 @@ class PlayerComponent extends SpriteAnimationGroupComponent
 
   @override
   Future<void> onLoad() async {
-    _previousArcherHealth = gameRef.miniGameBloc.state.archerHealth;
     await add(
-      _hitbox = RectangleHitbox.relative(
+      RectangleHitbox.relative(
         Vector2(0.25, 0.30),
         parentSize: size,
         anchor: Anchor.center,
