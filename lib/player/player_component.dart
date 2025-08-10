@@ -199,12 +199,14 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     }
     current = PlayerAnimation.idle;
     _state = PlayerIdleState();
+    _runSoundEffect.stop();
     debugPrint('state: ${_state.runtimeType}');
   }
 
   void forceIdleState() {
     current = PlayerAnimation.idle;
     _state = PlayerIdleState();
+    _runSoundEffect.stop();
     debugPrint('state: ${_state.runtimeType} (forced)');
   }
 
@@ -214,6 +216,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     }
     current = PlayerAnimation.run;
     _state = PlayerRunningState();
+    _runSoundEffect.play("running.mp3");
     debugPrint("state: ${_state.runtimeType}");
   }
 
@@ -223,15 +226,15 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     }
     current = PlayerAnimation.attack;
     _state = PlayerAttackState();
+    _runSoundEffect.stop();
     debugPrint("state: ${_state.runtimeType}");
   }
 
   void setGetHitState() {
-    decorator.replaceLast(
-      PaintDecorator.tint(
-        const Color.fromARGB(93, 255, 0, 0),
-      ),
+    _changePlayerColor(
+      const Color.fromARGB(93, 255, 0, 0),
     );
+
     _cameraShake.resume();
     gameRef.miniGameBloc.add(DecreaseHealthEvent());
     current = PlayerAnimation.getHit;
@@ -241,18 +244,17 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       forceIdleState();
       // if the player in low health do not remove the red color effect
       if (!_isPlayerLowHealth) {
-        decorator.replaceLast(null);
+        _removePlayerColor();
       }
       setDeathState();
     };
   }
 
   void setGetLifeState() {
-    decorator.replaceLast(
-      PaintDecorator.tint(
-        const Color.fromARGB(143, 92, 255, 92),
-      ),
+    _changePlayerColor(
+      const Color.fromARGB(143, 92, 255, 92),
     );
+
     gameRef.miniGameBloc.add(IncreaseHealthEvent());
     // TODO change get hit with other animation
     current = PlayerAnimation.getHit;
@@ -260,7 +262,13 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     debugPrint("state: ${_state.runtimeType}");
     animationTicker?.onComplete = () {
       forceIdleState();
-      decorator.replaceLast(null);
+      if (_isPlayerLowHealth) {
+        _changePlayerColor(
+          const Color.fromARGB(93, 255, 0, 0),
+        );
+      } else {
+        _removePlayerColor();
+      }
     };
   }
 
@@ -268,17 +276,16 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     if (!shouldPlayerDie) {
       return;
     }
-
-    decorator.replaceLast(
-      PaintDecorator.tint(
-        const Color.fromARGB(93, 255, 0, 0),
-      ),
+    _changePlayerColor(
+      const Color.fromARGB(93, 255, 0, 0),
     );
+
     current = PlayerAnimation.death;
     _state = PlayerDeathState();
     animationTicker?.onComplete = () {
       gameRef.miniGameBloc.add(GoToWinOrLosePage());
     };
+    _runSoundEffect.stop();
     debugPrint("state: ${_state.runtimeType}");
   }
 
@@ -346,5 +353,17 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       setGetLifeState();
     }
     _cameraShake.pause();
+  }
+
+  void _changePlayerColor(Color color) {
+    decorator.replaceLast(
+      PaintDecorator.tint(
+        color,
+      ),
+    );
+  }
+
+  void _removePlayerColor() {
+    decorator.replaceLast(null);
   }
 }
