@@ -1,5 +1,5 @@
-name: mini_game_via_flame
-description: A new Flutter project.
+name: the_hunter
+description: A game developed vie Flame engine.
 publish_to: "none"
 
 version: 1.0.0+1
@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  flame: ^1.15.0
-  flame_audio: ^2.1.8
-  flame_bloc: ^1.10.10
+  flame: ^1.20.0
+  flame_audio: ^2.10.2
+  flame_bloc: ^1.12.0
   bloc: ^8.1.4
   flutter_bloc: ^8.1.5
   equatable: ^2.0.5

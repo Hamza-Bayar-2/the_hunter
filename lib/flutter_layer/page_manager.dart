@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
-import 'package:mini_game_via_flame/flutter_layer/game_page.dart';
-import 'package:mini_game_via_flame/flutter_layer/main_page.dart';
-import 'package:mini_game_via_flame/flutter_layer/pause_page.dart';
-import 'package:mini_game_via_flame/flutter_layer/win_lose_page.dart';
+import 'package:the_hunter/blocs/mini_game/mini_game_bloc.dart';
+import 'package:the_hunter/flutter_layer/game_page.dart';
+import 'package:the_hunter/flutter_layer/main_page.dart';
+import 'package:the_hunter/flutter_layer/pause_page.dart';
+import 'package:the_hunter/flutter_layer/win_lose_page.dart';
 
 class PageManager extends StatelessWidget {
   const PageManager({Key? key}) : super(key: key);

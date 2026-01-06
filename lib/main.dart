@@ -1,9 +1,9 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
-import 'package:mini_game_via_flame/flame_layer/flame_layer.dart';
-import 'package:mini_game_via_flame/flutter_layer/flutter_layer.dart';
+import 'package:the_hunter/blocs/mini_game/mini_game_bloc.dart';
+import 'package:the_hunter/flame_layer/flame_layer.dart';
+import 'package:the_hunter/flutter_layer/flutter_layer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

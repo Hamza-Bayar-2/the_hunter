@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
-import 'package:mini_game_via_flame/constants/image_constants.dart';
-import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
-import 'package:mini_game_via_flame/sprites/arrow.dart';
+import 'package:the_hunter/constants/image_constants.dart';
+import 'package:the_hunter/flame_layer/mini_game.dart';
+import 'package:the_hunter/sprites/arrow.dart';
 
 class ArrowPool extends Component with HasGameRef<MiniGame> {
   final List<Arrow> _pool = [];

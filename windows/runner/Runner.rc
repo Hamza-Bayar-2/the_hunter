@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "mini_game_via_flame" "\0"
+            VALUE "FileDescription", "the_hunter" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mini_game_via_flame" "\0"
+            VALUE "InternalName", "the_hunter" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mini_game_via_flame.exe" "\0"
-            VALUE "ProductName", "mini_game_via_flame" "\0"
+            VALUE "OriginalFilename", "the_hunter.exe" "\0"
+            VALUE "ProductName", "the_hunter" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -12,17 +12,17 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
-import 'package:mini_game_via_flame/constants/audio_constants.dart';
-import 'package:mini_game_via_flame/constants/image_constants.dart';
-import 'package:mini_game_via_flame/device_detector.dart';
-import 'package:mini_game_via_flame/player/player_component.dart';
-import 'package:mini_game_via_flame/player/state/player_state.dart';
-import 'package:mini_game_via_flame/pools/arrow_pool.dart';
-import 'package:mini_game_via_flame/pools/enemy_pool.dart';
-import 'package:mini_game_via_flame/sprites/arrow.dart';
-import 'package:mini_game_via_flame/sprites/goblin.dart';
-import 'package:mini_game_via_flame/sprites/heart.dart';
+import 'package:the_hunter/blocs/mini_game/mini_game_bloc.dart';
+import 'package:the_hunter/constants/audio_constants.dart';
+import 'package:the_hunter/constants/image_constants.dart';
+import 'package:the_hunter/device_detector.dart';
+import 'package:the_hunter/player/player_component.dart';
+import 'package:the_hunter/player/state/player_state.dart';
+import 'package:the_hunter/pools/arrow_pool.dart';
+import 'package:the_hunter/pools/enemy_pool.dart';
+import 'package:the_hunter/sprites/arrow.dart';
+import 'package:the_hunter/sprites/goblin.dart';
+import 'package:the_hunter/sprites/heart.dart';
 
 class MiniGame extends FlameGame
     with

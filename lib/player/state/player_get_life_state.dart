@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
-import 'package:mini_game_via_flame/player/player_component.dart';
-import 'package:mini_game_via_flame/player/state/player_state.dart';
+import 'package:the_hunter/player/player_component.dart';
+import 'package:the_hunter/player/state/player_state.dart';
 
 class PlayerGetLifeState implements PlayerState {
   @override

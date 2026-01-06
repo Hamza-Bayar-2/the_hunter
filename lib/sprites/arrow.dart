@@ -4,13 +4,13 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
-import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
-import 'package:mini_game_via_flame/player/player_component.dart';
-import 'package:mini_game_via_flame/sprites/flying_eye.dart';
-import 'package:mini_game_via_flame/sprites/goblin.dart';
-import 'package:mini_game_via_flame/sprites/mushroom.dart';
-import 'package:mini_game_via_flame/sprites/skeleton.dart';
+import 'package:the_hunter/blocs/mini_game/mini_game_bloc.dart';
+import 'package:the_hunter/flame_layer/mini_game.dart';
+import 'package:the_hunter/player/player_component.dart';
+import 'package:the_hunter/sprites/flying_eye.dart';
+import 'package:the_hunter/sprites/goblin.dart';
+import 'package:the_hunter/sprites/mushroom.dart';
+import 'package:the_hunter/sprites/skeleton.dart';
 
 class Arrow extends SpriteAnimationComponent
     with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {

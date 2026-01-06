@@ -1,9 +1,9 @@
 import 'package:flame/components.dart';
-import 'package:mini_game_via_flame/flame_layer/mini_game.dart';
-import 'package:mini_game_via_flame/sprites/flying_eye.dart';
-import 'package:mini_game_via_flame/sprites/goblin.dart';
-import 'package:mini_game_via_flame/sprites/mushroom.dart';
-import 'package:mini_game_via_flame/sprites/skeleton.dart';
+import 'package:the_hunter/flame_layer/mini_game.dart';
+import 'package:the_hunter/sprites/flying_eye.dart';
+import 'package:the_hunter/sprites/goblin.dart';
+import 'package:the_hunter/sprites/mushroom.dart';
+import 'package:the_hunter/sprites/skeleton.dart';
 
 class EnemyPool extends Component with HasGameRef<MiniGame> {
   final List<Goblin> _goblinPool = [];

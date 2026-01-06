@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mini_game_via_flame/blocs/mini_game/mini_game_bloc.dart';
+import 'package:the_hunter/blocs/mini_game/mini_game_bloc.dart';
 
 class PausePage extends StatelessWidget {
   const PausePage({Key? key}) : super(key: key);

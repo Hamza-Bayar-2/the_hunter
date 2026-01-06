@@ -1,4 +1,4 @@
-package com.example.mini_game_via_flame
+package com.example.the_hunter
 
 import io.flutter.embedding.android.FlutterActivity
 
