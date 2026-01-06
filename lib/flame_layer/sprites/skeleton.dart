@@ -11,7 +11,7 @@ import 'package:the_hunter/flame_layer/sprites/arrow.dart';
 enum SkeletonState { run, death, attack, shield }
 
 class Skeleton extends SpriteAnimationGroupComponent
-    with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {
+    with HasGameReference<MiniGame>, CollisionCallbacks, HasVisibility {
   bool isSpawnRight;
   Vector2 enemySize;
   Skeleton({
@@ -42,10 +42,10 @@ class Skeleton extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (gameRef.miniGameBloc.state.isArcherDead ||
-        gameRef.miniGameBloc.state.isTheGameReset ||
-        (gameRef.miniGameBloc.state.gameStage == 1 &&
-            gameRef.miniGameBloc.state.monsterKillNumber == 0)) {
+    if (game.miniGameBloc.state.isArcherDead ||
+        game.miniGameBloc.state.isTheGameReset ||
+        (game.miniGameBloc.state.gameStage == 1 &&
+            game.miniGameBloc.state.monsterKillNumber == 0)) {
       deactivate();
     }
 
@@ -107,7 +107,7 @@ class Skeleton extends SpriteAnimationGroupComponent
       required int frameAmount,
       required double stepTime}) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache(_getSkeletonImagePath(skeletonState)),
+      game.images.fromCache(_getSkeletonImagePath(skeletonState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
@@ -145,7 +145,7 @@ class Skeleton extends SpriteAnimationGroupComponent
 
       if (position.x < 0) {
         deactivate();
-        position = Vector2(gameRef.background.size.x, 0);
+        position = Vector2(game.background.size.x, 0);
       }
     } else {
       directionX += skeletonSpeed;
@@ -155,7 +155,7 @@ class Skeleton extends SpriteAnimationGroupComponent
       }
       current = SkeletonState.run;
 
-      if (position.x > gameRef.background.size.x) {
+      if (position.x > game.background.size.x) {
         deactivate();
         position = Vector2(0, 0);
       }
@@ -171,7 +171,7 @@ class Skeleton extends SpriteAnimationGroupComponent
     } else {
       bloodTimer.resume();
       bloodTimer.update(dt);
-      add(gameRef.bloodParticlesForMonsters(enemySize * 0.45));
+      add(game.bloodParticlesForMonsters(enemySize * 0.45));
     }
   }
 
@@ -188,7 +188,7 @@ class Skeleton extends SpriteAnimationGroupComponent
   }
 
   void _isSkeletonShielding() {
-    for (Arrow activeArrow in gameRef.arrowPool.getArrowPool) {
+    for (Arrow activeArrow in game.arrowPool.getArrowPool) {
       if (activeArrow.isVisible &&
           activeArrow.isArrowFacingRight &&
           !isSkeletonFacingRight &&

@@ -9,7 +9,7 @@ import 'package:the_hunter/flame_layer/mini_game.dart';
 import 'package:the_hunter/flame_layer/player/player_component.dart';
 
 class Heart extends SpriteAnimationComponent
-    with HasGameRef<MiniGame>, CollisionCallbacks {
+    with HasGameReference<MiniGame>, CollisionCallbacks {
   Heart({
     SpriteAnimation? animation,
     Vector2? position,
@@ -39,7 +39,7 @@ class Heart extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    if (gameRef.miniGameBloc.state.isArcherDead) {
+    if (game.miniGameBloc.state.isArcherDead) {
       removeFromParent();
     }
 

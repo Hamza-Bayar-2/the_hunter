@@ -12,7 +12,7 @@ import 'package:the_hunter/flame_layer/sprites/arrow.dart';
 enum MushroomState { run, death, attack }
 
 class Mushroom extends SpriteAnimationGroupComponent
-    with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {
+    with HasGameReference<MiniGame>, CollisionCallbacks, HasVisibility {
   bool isSpawnRight;
   Vector2 enemySize;
   Mushroom({
@@ -43,8 +43,8 @@ class Mushroom extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (gameRef.miniGameBloc.state.isArcherDead ||
-        gameRef.miniGameBloc.state.isTheGameReset) {
+    if (game.miniGameBloc.state.isArcherDead ||
+        game.miniGameBloc.state.isTheGameReset) {
       deactivate();
     }
 
@@ -94,7 +94,7 @@ class Mushroom extends SpriteAnimationGroupComponent
       required int frameAmount,
       required double stepTime}) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache(_getMushroomImagePath(mushroomState)),
+      game.images.fromCache(_getMushroomImagePath(mushroomState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
@@ -129,9 +129,9 @@ class Mushroom extends SpriteAnimationGroupComponent
       current = MushroomState.run;
 
       if (isMushroomFollowsTheArhcer &&
-          gameRef.playerComponent.position.x < position.x) {
+          game.playerComponent.position.x < position.x) {
         directionX -= mushroomHypotenuseSpeed;
-        if (gameRef.playerComponent.position.y < position.y) {
+        if (game.playerComponent.position.y < position.y) {
           directionY -= mushroomHypotenuseSpeed;
         } else {
           directionY += mushroomHypotenuseSpeed;
@@ -142,7 +142,7 @@ class Mushroom extends SpriteAnimationGroupComponent
 
       if (position.x < 0) {
         deactivate();
-        position = Vector2(gameRef.background.size.x, 0);
+        position = Vector2(game.background.size.x, 0);
       }
     } else {
       if (!isMushroomFacingRight) {
@@ -152,9 +152,9 @@ class Mushroom extends SpriteAnimationGroupComponent
       current = MushroomState.run;
 
       if (isMushroomFollowsTheArhcer &&
-          gameRef.playerComponent.position.x > position.x) {
+          game.playerComponent.position.x > position.x) {
         directionX += mushroomHypotenuseSpeed;
-        if (gameRef.playerComponent.position.y < position.y) {
+        if (game.playerComponent.position.y < position.y) {
           directionY -= mushroomHypotenuseSpeed;
         } else {
           directionY += mushroomHypotenuseSpeed;
@@ -163,7 +163,7 @@ class Mushroom extends SpriteAnimationGroupComponent
         directionX += mushroomSpeed;
       }
 
-      if (position.x > gameRef.background.size.x) {
+      if (position.x > game.background.size.x) {
         deactivate();
         position = Vector2(0, 0);
       }
@@ -179,7 +179,7 @@ class Mushroom extends SpriteAnimationGroupComponent
     } else {
       bloodTimer.resume();
       bloodTimer.update(dt);
-      add(gameRef.bloodParticlesForMonsters(enemySize * 0.45));
+      add(game.bloodParticlesForMonsters(enemySize * 0.45));
     }
   }
 

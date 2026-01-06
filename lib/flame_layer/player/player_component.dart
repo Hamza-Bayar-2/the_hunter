@@ -35,7 +35,7 @@ enum PlayerAnimation {
 }
 
 class PlayerComponent extends SpriteAnimationGroupComponent
-    with HasGameRef<MiniGame>, CollisionCallbacks {
+    with HasGameReference<MiniGame>, CollisionCallbacks {
   PlayerComponent({
     required double playerSpeed,
     required Vector2 size,
@@ -86,8 +86,8 @@ class PlayerComponent extends SpriteAnimationGroupComponent
   bool get _isRunningDiagonally =>
       (_shouldMoveLeft || _shouldMoveRight) &&
       (_shouldMoveUp || _shouldMoveDown);
-  bool get shouldPlayerDie => gameRef.miniGameBloc.state.isArcherDead;
-  bool get _isPlayerLowHealth => gameRef.miniGameBloc.state.archerHealth <= 20;
+  bool get shouldPlayerDie => game.miniGameBloc.state.isArcherDead;
+  bool get _isPlayerLowHealth => game.miniGameBloc.state.archerHealth <= 20;
 
   @override
   Future<void> onLoad() async {
@@ -99,7 +99,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       ),
     );
     _loadAnimation();
-    gameRef.cameraComponent.viewfinder.add(_cameraShake);
+    game.cameraComponent.viewfinder.add(_cameraShake);
     _cameraShake.pause();
     return super.onLoad();
   }
@@ -185,7 +185,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     required bool loop,
   }) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache(_getArcherImagePath(archerState)),
+      game.images.fromCache(_getArcherImagePath(archerState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
@@ -256,7 +256,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
 
     fa.FlameAudio.play(AudioConstants.hurt);
     _cameraShake.resume();
-    gameRef.miniGameBloc.add(DecreaseHealthEvent());
+    game.miniGameBloc.add(DecreaseHealthEvent());
     current = PlayerAnimation.getHit;
     _state = PlayerGetHitState();
     debugPrint("state: ${_state.runtimeType}");
@@ -275,7 +275,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
       const Color.fromARGB(143, 92, 255, 92),
     );
 
-    gameRef.miniGameBloc.add(IncreaseHealthEvent());
+    game.miniGameBloc.add(IncreaseHealthEvent());
     // TODO change get hit with other animation
     current = PlayerAnimation.getHit;
     _state = PlayerGetLifeState();
@@ -305,7 +305,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     current = PlayerAnimation.death;
     _state = PlayerDeathState();
     animationTicker?.onComplete = () {
-      gameRef.miniGameBloc.add(GoToWinOrLosePage());
+      game.miniGameBloc.add(GoToWinOrLosePage());
     };
     _runSoundEffect.stop();
     debugPrint("state: ${_state.runtimeType}");
@@ -335,11 +335,11 @@ class PlayerComponent extends SpriteAnimationGroupComponent
     position.clamp(
       Vector2(
         size.x - (size.x / 1.2),
-        gameRef.background.size.y * 0.6 - size.y,
+        game.background.size.y * 0.6 - size.y,
       ),
       Vector2(
-            gameRef.background.size.x,
-            gameRef.background.size.y,
+            game.background.size.x,
+            game.background.size.y,
           ) -
           (size / 6),
     );
@@ -347,14 +347,14 @@ class PlayerComponent extends SpriteAnimationGroupComponent
 
   void playerFacingDirection() {
     if (_shouldMoveLeft) {
-      if (gameRef.miniGameBloc.state.isPlayerFacingRight) {
+      if (game.miniGameBloc.state.isPlayerFacingRight) {
         flipHorizontallyAroundCenter();
-        gameRef.miniGameBloc.add(FaceLeftEvent());
+        game.miniGameBloc.add(FaceLeftEvent());
       }
     } else {
-      if (!gameRef.miniGameBloc.state.isPlayerFacingRight) {
+      if (!game.miniGameBloc.state.isPlayerFacingRight) {
         flipHorizontallyAroundCenter();
-        gameRef.miniGameBloc.add(FaceRightEvent());
+        game.miniGameBloc.add(FaceRightEvent());
       }
     }
   }

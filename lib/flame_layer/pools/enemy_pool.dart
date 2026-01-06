@@ -5,7 +5,7 @@ import 'package:the_hunter/flame_layer/sprites/goblin.dart';
 import 'package:the_hunter/flame_layer/sprites/mushroom.dart';
 import 'package:the_hunter/flame_layer/sprites/skeleton.dart';
 
-class EnemyPool extends Component with HasGameRef<MiniGame> {
+class EnemyPool extends Component with HasGameReference<MiniGame> {
   final List<Goblin> _goblinPool = [];
   final List<Mushroom> _mushroomPool = [];
   final List<FlyingEye> _flyinEyePool = [];

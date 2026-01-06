@@ -11,7 +11,7 @@ import 'package:the_hunter/flame_layer/sprites/arrow.dart';
 enum FlyingEyeState { run, death, attack }
 
 class FlyingEye extends SpriteAnimationGroupComponent
-    with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {
+    with HasGameReference<MiniGame>, CollisionCallbacks, HasVisibility {
   bool isSpawnRight;
   Vector2 enemySize;
   FlyingEye({
@@ -44,8 +44,8 @@ class FlyingEye extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (gameRef.miniGameBloc.state.isArcherDead ||
-        gameRef.miniGameBloc.state.isTheGameReset) {
+    if (game.miniGameBloc.state.isArcherDead ||
+        game.miniGameBloc.state.isTheGameReset) {
       // removeFromParent();
       deactivate();
     }
@@ -97,7 +97,7 @@ class FlyingEye extends SpriteAnimationGroupComponent
       required int frameAmount,
       required double stepTime}) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache(_getFlyingEyeImagePath(flyingEyeState)),
+      game.images.fromCache(_getFlyingEyeImagePath(flyingEyeState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
@@ -135,7 +135,7 @@ class FlyingEye extends SpriteAnimationGroupComponent
 
       if (position.x < 0) {
         deactivate();
-        position = Vector2(gameRef.background.size.x, 0);
+        position = Vector2(game.background.size.x, 0);
       }
     } else {
       if (!isFlyingEyeFacingRight) {
@@ -147,7 +147,7 @@ class FlyingEye extends SpriteAnimationGroupComponent
           ? flyingEyeSpeed + flyingEyeSpeedUpScale
           : flyingEyeSpeed;
 
-      if (position.x > gameRef.background.size.x) {
+      if (position.x > game.background.size.x) {
         // removeFromParent();
         deactivate();
         position = Vector2(0, 0);
@@ -164,7 +164,7 @@ class FlyingEye extends SpriteAnimationGroupComponent
     } else {
       bloodTimer.resume();
       bloodTimer.update(dt);
-      add(gameRef.bloodParticlesForMonsters(enemySize * 0.45));
+      add(game.bloodParticlesForMonsters(enemySize * 0.45));
     }
   }
 

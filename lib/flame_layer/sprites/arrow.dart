@@ -13,7 +13,7 @@ import 'package:the_hunter/flame_layer/sprites/mushroom.dart';
 import 'package:the_hunter/flame_layer/sprites/skeleton.dart';
 
 class Arrow extends SpriteAnimationComponent
-    with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {
+    with HasGameReference<MiniGame>, CollisionCallbacks, HasVisibility {
   Arrow({
     required PlayerComponent playerComponent,
     SpriteAnimation? animation,
@@ -41,7 +41,7 @@ class Arrow extends SpriteAnimationComponent
     // the reason why I used variable instead of using it directly inside the "if"
     // because when I do it like that the arrow will change direction
     // according to the archer even after leaving the bow
-    _isArcherFacingRight = gameRef.miniGameBloc.state.isPlayerFacingRight;
+    _isArcherFacingRight = game.miniGameBloc.state.isPlayerFacingRight;
     hitbox = RectangleHitbox();
     add(hitbox);
     isVisible = false;
@@ -57,7 +57,7 @@ class Arrow extends SpriteAnimationComponent
     } else {
       // this will change the direction of the arrow after the creation
       // without this line the created arrow will not change its direction even if the archer changes her direction
-      _isArcherFacingRight = gameRef.miniGameBloc.state.isPlayerFacingRight;
+      _isArcherFacingRight = game.miniGameBloc.state.isPlayerFacingRight;
     }
 
     super.update(dt);
@@ -67,11 +67,11 @@ class Arrow extends SpriteAnimationComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Goblin || other is Mushroom || other is FlyingEye) {
       hit();
-      gameRef.miniGameBloc.add(KillMonster());
+      game.miniGameBloc.add(KillMonster());
     } else if (other is Skeleton) {
       hit();
       if (!other.isShielding) {
-        gameRef.miniGameBloc.add(KillMonster());
+        game.miniGameBloc.add(KillMonster());
       }
     }
     super.onCollision(intersectionPoints, other);
@@ -99,7 +99,7 @@ class Arrow extends SpriteAnimationComponent
   }
 
   void _onArrowOutOfBoundaries() {
-    if (position.x < 0 || position.x > gameRef.background.size.x) {
+    if (position.x < 0 || position.x > game.background.size.x) {
       hit();
     }
   }

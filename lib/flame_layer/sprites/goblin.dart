@@ -12,7 +12,7 @@ import 'package:the_hunter/flame_layer/sprites/arrow.dart';
 enum GoblinState { run, death, attack }
 
 class Goblin extends SpriteAnimationGroupComponent
-    with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {
+    with HasGameReference<MiniGame>, CollisionCallbacks, HasVisibility {
   bool isSpawnRight;
   Vector2 enemySize;
   Goblin({
@@ -44,8 +44,8 @@ class Goblin extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (gameRef.miniGameBloc.state.isArcherDead ||
-        gameRef.miniGameBloc.state.isTheGameReset) {
+    if (game.miniGameBloc.state.isArcherDead ||
+        game.miniGameBloc.state.isTheGameReset) {
       deactivate();
     }
 
@@ -97,7 +97,7 @@ class Goblin extends SpriteAnimationGroupComponent
       required int frameAmount,
       required double stepTime}) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache(_getGoblinImagePath(goblinState)),
+      game.images.fromCache(_getGoblinImagePath(goblinState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
@@ -132,9 +132,9 @@ class Goblin extends SpriteAnimationGroupComponent
       current = GoblinState.run;
 
       if (isGoblinFollowsTheArhcer &&
-          gameRef.playerComponent.position.x < position.x) {
+          game.playerComponent.position.x < position.x) {
         directionX -= goblinHypotenuseSpeed;
-        if (gameRef.playerComponent.position.y - 20 < position.y) {
+        if (game.playerComponent.position.y - 20 < position.y) {
           directionY -= goblinHypotenuseSpeed;
         } else {
           directionY += goblinHypotenuseSpeed;
@@ -150,7 +150,7 @@ class Goblin extends SpriteAnimationGroupComponent
         // it will be at the border of the wall where it was deactivated,
         // even if only for a very short time.
         // This may cause the goblin to be deactivated before it reaches where it should be spawned.
-        position = Vector2(gameRef.background.size.x, 0);
+        position = Vector2(game.background.size.x, 0);
       }
     } else {
       if (!isGoblinFacingRight) {
@@ -160,9 +160,9 @@ class Goblin extends SpriteAnimationGroupComponent
       current = GoblinState.run;
 
       if (isGoblinFollowsTheArhcer &&
-          gameRef.playerComponent.position.x > position.x) {
+          game.playerComponent.position.x > position.x) {
         directionX += goblinHypotenuseSpeed;
-        if (gameRef.playerComponent.position.y - 20 < position.y) {
+        if (game.playerComponent.position.y - 20 < position.y) {
           directionY -= goblinHypotenuseSpeed;
         } else {
           directionY += goblinHypotenuseSpeed;
@@ -171,7 +171,7 @@ class Goblin extends SpriteAnimationGroupComponent
         directionX += goblinSpeed;
       }
 
-      if (position.x > gameRef.background.size.x) {
+      if (position.x > game.background.size.x) {
         deactivate();
         position = Vector2(0, 0);
       }
@@ -187,7 +187,7 @@ class Goblin extends SpriteAnimationGroupComponent
     } else {
       bloodTimer.resume();
       bloodTimer.update(dt);
-      add(gameRef.bloodParticlesForMonsters(enemySize * 0.45));
+      add(game.bloodParticlesForMonsters(enemySize * 0.45));
     }
   }
 

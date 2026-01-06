@@ -333,7 +333,7 @@ class MiniGame extends FlameGame
     }
   }
 
-  // by using gameRef I added the blood prarticle to the monsters
+  // by using game I added the blood prarticle to the monsters
   ParticleSystemComponent bloodParticlesForMonsters(Vector2 position) {
     final Random random = Random();
     Vector2 randomVector2KillEffect() =>
