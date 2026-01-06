@@ -1,15 +1,14 @@
 import 'package:flame/components.dart';
-import 'package:the_hunter/player/player_component.dart';
-import 'package:the_hunter/player/state/player_state.dart';
+import 'package:the_hunter/flame_layer/player/player_component.dart';
+import 'package:the_hunter/flame_layer/player/state/player_state.dart';
 
-class PlayerRunningState implements PlayerState {
+class PlayerGetLifeState implements PlayerState {
   @override
   void handleInput({
     required Set<PlayerAction> actions,
     required PlayerComponent player,
   }) {
-    player.setAttackState();
-    player.setIdleState();
+    // TODO: implement handleInput
   }
 
   @override
@@ -17,8 +16,7 @@ class PlayerRunningState implements PlayerState {
     required double deltaTime,
     required PlayerComponent player,
   }) {
-    player.playerFacingDirection();
-    player.playerMovement(deltaTime);
+    // TODO: implement update
   }
 
   @override
@@ -28,6 +26,5 @@ class PlayerRunningState implements PlayerState {
     required PlayerComponent player,
   }) {
     player.onEnemyCollision(other);
-    player.onHeartCollision(other);
   }
 }

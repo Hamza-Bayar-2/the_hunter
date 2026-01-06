@@ -13,18 +13,18 @@ import 'package:the_hunter/blocs/mini_game/mini_game_bloc.dart';
 import 'package:the_hunter/constants/audio_constants.dart';
 import 'package:the_hunter/constants/image_constants.dart';
 import 'package:the_hunter/flame_layer/mini_game.dart';
-import 'package:the_hunter/player/state/player_attack_state.dart';
-import 'package:the_hunter/player/state/player_death_state.dart';
-import 'package:the_hunter/player/state/player_get_hit_state.dart';
-import 'package:the_hunter/player/state/player_get_life_state.dart';
-import 'package:the_hunter/player/state/player_idle_state.dart';
-import 'package:the_hunter/player/state/player_running_state.dart';
-import 'package:the_hunter/player/state/player_state.dart';
-import 'package:the_hunter/sprites/flying_eye.dart';
-import 'package:the_hunter/sprites/goblin.dart';
-import 'package:the_hunter/sprites/heart.dart';
-import 'package:the_hunter/sprites/mushroom.dart';
-import 'package:the_hunter/sprites/skeleton.dart';
+import 'package:the_hunter/flame_layer/player/state/player_attack_state.dart';
+import 'package:the_hunter/flame_layer/player/state/player_death_state.dart';
+import 'package:the_hunter/flame_layer/player/state/player_get_hit_state.dart';
+import 'package:the_hunter/flame_layer/player/state/player_get_life_state.dart';
+import 'package:the_hunter/flame_layer/player/state/player_idle_state.dart';
+import 'package:the_hunter/flame_layer/player/state/player_running_state.dart';
+import 'package:the_hunter/flame_layer/player/state/player_state.dart';
+import 'package:the_hunter/flame_layer/sprites/flying_eye.dart';
+import 'package:the_hunter/flame_layer/sprites/goblin.dart';
+import 'package:the_hunter/flame_layer/sprites/heart.dart';
+import 'package:the_hunter/flame_layer/sprites/mushroom.dart';
+import 'package:the_hunter/flame_layer/sprites/skeleton.dart';
 
 enum PlayerAnimation {
   attack,

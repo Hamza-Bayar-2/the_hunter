@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -5,37 +6,35 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:the_hunter/constants/audio_constants.dart';
 import 'package:the_hunter/constants/image_constants.dart';
 import 'package:the_hunter/flame_layer/mini_game.dart';
-import 'package:the_hunter/player/player_component.dart';
-import 'package:the_hunter/sprites/arrow.dart';
+import 'package:the_hunter/flame_layer/player/player_component.dart';
+import 'package:the_hunter/flame_layer/sprites/arrow.dart';
 
-enum FlyingEyeState { run, death, attack }
+enum MushroomState { run, death, attack }
 
-class FlyingEye extends SpriteAnimationGroupComponent
+class Mushroom extends SpriteAnimationGroupComponent
     with HasGameRef<MiniGame>, CollisionCallbacks, HasVisibility {
   bool isSpawnRight;
   Vector2 enemySize;
-  FlyingEye({
+  Mushroom({
     Vector2? position,
     required this.enemySize,
     Anchor anchor = Anchor.center,
     required this.isSpawnRight,
   }) : super(position: position, size: enemySize, anchor: anchor);
 
-  double flyingEyeSpeed = 150;
-  double flyingEyeSpeedUpScale = 150;
-  bool isFlyingEyeFacingRight = true;
+  double mushroomSpeed = 170;
+  bool isMushroomFacingRight = true;
   bool isDying = false;
-  // the timer is a bit less than the death time,
-  // because the death animation repeats a bit
-  final Timer flyingEyeDeathTimer = Timer(0.39);
+  final Timer mushroomDeathTimer = Timer(0.39);
   final Timer bloodTimer = Timer(0.1);
-  late final rectangleHitbox =
-      RectangleHitbox.relative(parentSize: enemySize, Vector2(0.22, 0.15))
-        ..debugMode = false;
-  final bool isFlyingEyeGoingFast = Random().nextInt(100) < 35;
+  late final rectangleHitbox = RectangleHitbox.relative(
+      parentSize: enemySize, Vector2(0.15, 0.25), position: enemySize * 0.42)
+    ..debugMode = false;
+  final bool isMushroomFollowsTheArhcer = Random().nextInt(100) < 35;
+  late double mushroomHypotenuseSpeed = sqrt(mushroomSpeed * mushroomSpeed / 2);
 
   @override
-  Future<void> onLoad() async {
+  FutureOr<void> onLoad() {
     _loadAnimation();
     add(rectangleHitbox);
     deactivate();
@@ -46,16 +45,15 @@ class FlyingEye extends SpriteAnimationGroupComponent
   void update(double dt) {
     if (gameRef.miniGameBloc.state.isArcherDead ||
         gameRef.miniGameBloc.state.isTheGameReset) {
-      // removeFromParent();
       deactivate();
     }
 
     if (isVisible) {
       if (isDying) {
         _bloodParticles(dt);
-        _flyingEyeDeath(dt);
+        _mushroomDeath(dt);
       } else {
-        _flyingEyeMovement(dt);
+        _mushroomMovement(dt);
       }
     } else {
       bloodTimer.reset();
@@ -68,9 +66,8 @@ class FlyingEye extends SpriteAnimationGroupComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Arrow && !isDying) {
       isDying = true;
-      FlameAudio.play(AudioConstants.flyingEyeDeath, volume: 0.7);
+      FlameAudio.play(AudioConstants.mushroomDeath);
     } else if (other is PlayerComponent) {
-      // removeFromParent();
       deactivate();
     }
     super.onCollision(intersectionPoints, other);
@@ -78,26 +75,26 @@ class FlyingEye extends SpriteAnimationGroupComponent
 
   void _loadAnimation() {
     double time = 0.1;
-    final runAnimation = _spriteAnimation(
-        flyingEyeState: "Flight", frameAmount: 8, stepTime: time);
+    final runAnimation =
+        _spriteAnimation(mushroomState: "Run", frameAmount: 8, stepTime: time);
     final deathAnimation = _spriteAnimation(
-        flyingEyeState: "Death", frameAmount: 4, stepTime: time);
+        mushroomState: "Death", frameAmount: 4, stepTime: time);
     final attackAnimation = _spriteAnimation(
-        flyingEyeState: "Attack", frameAmount: 8, stepTime: time);
+        mushroomState: "Attack", frameAmount: 8, stepTime: time);
 
     animations = {
-      FlyingEyeState.run: runAnimation,
-      FlyingEyeState.death: deathAnimation,
-      FlyingEyeState.attack: attackAnimation,
+      MushroomState.run: runAnimation,
+      MushroomState.death: deathAnimation,
+      MushroomState.attack: attackAnimation,
     };
   }
 
   SpriteAnimation _spriteAnimation(
-      {required String flyingEyeState,
+      {required String mushroomState,
       required int frameAmount,
       required double stepTime}) {
     return SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache(_getFlyingEyeImagePath(flyingEyeState)),
+      gameRef.images.fromCache(_getMushroomImagePath(mushroomState)),
       SpriteAnimationData.sequenced(
         amount: frameAmount,
         stepTime: stepTime,
@@ -106,55 +103,73 @@ class FlyingEye extends SpriteAnimationGroupComponent
     );
   }
 
-  String _getFlyingEyeImagePath(String flyingEyeState) {
-    switch (flyingEyeState) {
-      case "Flight":
-        return ImageConstants.flyingEyeFlight;
+  String _getMushroomImagePath(String mushroomState) {
+    switch (mushroomState) {
+      case "Run":
+        return ImageConstants.mushroomRun;
       case "Death":
-        return ImageConstants.flyingEyeDeath;
+        return ImageConstants.mushroomDeath;
       case "Attack":
-        return ImageConstants.flyingEyeAttack;
+        return ImageConstants.mushroomAttack;
       default:
-        return ImageConstants.flyingEyeFlight;
+        return ImageConstants.mushroomRun;
     }
   }
 
-  void _flyingEyeMovement(double dt) {
+  void _mushroomMovement(double dt) {
     Vector2 velocity = Vector2.zero();
     double directionX = 0.0;
+    double directionY = 0.0;
 
     if (isSpawnRight) {
-      if (isFlyingEyeFacingRight) {
+      if (isMushroomFacingRight) {
         flipHorizontallyAroundCenter();
-        isFlyingEyeFacingRight = false;
+        isMushroomFacingRight = false;
       }
-      current = FlyingEyeState.run;
-      directionX -= isFlyingEyeGoingFast
-          ? flyingEyeSpeed + flyingEyeSpeedUpScale
-          : flyingEyeSpeed;
+      current = MushroomState.run;
+
+      if (isMushroomFollowsTheArhcer &&
+          gameRef.playerComponent.position.x < position.x) {
+        directionX -= mushroomHypotenuseSpeed;
+        if (gameRef.playerComponent.position.y < position.y) {
+          directionY -= mushroomHypotenuseSpeed;
+        } else {
+          directionY += mushroomHypotenuseSpeed;
+        }
+      } else {
+        directionX -= mushroomSpeed;
+      }
 
       if (position.x < 0) {
         deactivate();
         position = Vector2(gameRef.background.size.x, 0);
       }
     } else {
-      if (!isFlyingEyeFacingRight) {
+      if (!isMushroomFacingRight) {
         flipHorizontallyAroundCenter();
-        isFlyingEyeFacingRight = true;
+        isMushroomFacingRight = true;
       }
-      current = FlyingEyeState.run;
-      directionX += isFlyingEyeGoingFast
-          ? flyingEyeSpeed + flyingEyeSpeedUpScale
-          : flyingEyeSpeed;
+      current = MushroomState.run;
+
+      if (isMushroomFollowsTheArhcer &&
+          gameRef.playerComponent.position.x > position.x) {
+        directionX += mushroomHypotenuseSpeed;
+        if (gameRef.playerComponent.position.y < position.y) {
+          directionY -= mushroomHypotenuseSpeed;
+        } else {
+          directionY += mushroomHypotenuseSpeed;
+        }
+      } else {
+        directionX += mushroomSpeed;
+      }
 
       if (position.x > gameRef.background.size.x) {
-        // removeFromParent();
         deactivate();
         position = Vector2(0, 0);
       }
     }
 
-    velocity = Vector2(directionX, 0);
+    velocity = Vector2(directionX, directionY);
     position.add(velocity * dt);
   }
 
@@ -168,17 +183,15 @@ class FlyingEye extends SpriteAnimationGroupComponent
     }
   }
 
-  void _flyingEyeDeath(double dt) {
-    // rectangleHitbox.removeFromParent();
+  void _mushroomDeath(double dt) {
     rectangleHitbox.collisionType = CollisionType.inactive;
-    flyingEyeDeathTimer.resume();
-    flyingEyeDeathTimer.update(dt);
-    current = FlyingEyeState.death;
-    if (flyingEyeDeathTimer.finished) {
-      // removeFromParent();
+    mushroomDeathTimer.resume();
+    mushroomDeathTimer.update(dt);
+    current = MushroomState.death;
+    if (mushroomDeathTimer.finished) {
       deactivate();
       isDying = false;
-      flyingEyeDeathTimer.stop();
+      mushroomDeathTimer.stop();
     }
   }
 

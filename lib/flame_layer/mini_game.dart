@@ -16,13 +16,13 @@ import 'package:the_hunter/blocs/mini_game/mini_game_bloc.dart';
 import 'package:the_hunter/constants/audio_constants.dart';
 import 'package:the_hunter/constants/image_constants.dart';
 import 'package:the_hunter/device_detector.dart';
-import 'package:the_hunter/player/player_component.dart';
-import 'package:the_hunter/player/state/player_state.dart';
-import 'package:the_hunter/pools/arrow_pool.dart';
-import 'package:the_hunter/pools/enemy_pool.dart';
-import 'package:the_hunter/sprites/arrow.dart';
-import 'package:the_hunter/sprites/goblin.dart';
-import 'package:the_hunter/sprites/heart.dart';
+import 'package:the_hunter/flame_layer/player/player_component.dart';
+import 'package:the_hunter/flame_layer/player/state/player_state.dart';
+import 'package:the_hunter/flame_layer/pools/arrow_pool.dart';
+import 'package:the_hunter/flame_layer/pools/enemy_pool.dart';
+import 'package:the_hunter/flame_layer/sprites/arrow.dart';
+import 'package:the_hunter/flame_layer/sprites/goblin.dart';
+import 'package:the_hunter/flame_layer/sprites/heart.dart';
 
 class MiniGame extends FlameGame
     with

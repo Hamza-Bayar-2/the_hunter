@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:the_hunter/player/player_component.dart';
+import 'package:the_hunter/flame_layer/player/player_component.dart';
 
 enum PlayerAction {
   moveUp,
