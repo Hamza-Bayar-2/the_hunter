@@ -39,7 +39,10 @@ class MiniGameApp extends StatelessWidget {
         create: (context) => MiniGameBloc(),
         child: const Scaffold(
           body: Stack(
-            children: [FlameLayer(), FlutterLayer()],
+            children: [
+              FlameLayer(),
+              FlutterLayer(),
+            ],
           ),
         ),
       ),

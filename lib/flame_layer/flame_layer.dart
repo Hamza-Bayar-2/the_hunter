@@ -10,6 +10,8 @@ class FlameLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GameWidget(
-        game: MiniGame(miniGameBloc: context.read<MiniGameBloc>()));
+        game: MiniGame(
+      miniGameBloc: context.read<MiniGameBloc>(),
+    ));
   }
 }

@@ -114,6 +114,8 @@ class MiniGame extends FlameGame
 
   @override
   Future<void> update(double dt) async {
+    if (!isLoaded) return;
+    
     if (miniGameBloc.state.flutterPage == 0 ||
         miniGameBloc.state.flutterPage == 2) {
       // 0 => main page - 2 => pause page
@@ -134,6 +136,9 @@ class MiniGame extends FlameGame
   @override
   KeyEventResult onKeyEvent(
       KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    // Check if player component is initialized
+    if (!isLoaded) return KeyEventResult.ignored;
+    
     _playerComponent.onInput(<PlayerAction>{
       for (final LogicalKeyboardKey key in keysPressed)
         if (key == LogicalKeyboardKey.arrowLeft ||
