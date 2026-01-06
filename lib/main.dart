@@ -38,11 +38,23 @@ class MiniGameApp extends StatelessWidget {
       home: BlocProvider<MiniGameBloc>(
         create: (context) => MiniGameBloc(),
         child: const Scaffold(
-          body: Stack(
-            children: [
-              FlameLayer(),
-              FlutterLayer(),
-            ],
+          body: Center(
+            child: AspectRatio(
+              aspectRatio: 16 / 9, // Fixed aspect ratio
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: SizedBox(
+                  width: 1318, // Fixed width
+                  height: 741, // Fixed height
+                  child: Stack(
+                    children: [
+                      FlameLayer(),
+                      FlutterLayer(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),
